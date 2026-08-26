@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="pt-BR">
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260826-05-4fbd04e","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/50d846425a1e5082.telemetry_sdk.js" integrity="sha512-Otbex+ztlVbcEGql0rXGd/3E3ee/hqAntg6DeuUEMG6pIPbXGOSvZbFZVzknAXi1tH/itQ+ijEhOTr2aWj6CXg=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Data House — Portal de Relatórios</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f141c;
+      --panel: #19212d;
+      --panel-soft: #202a38;
+      --line: rgba(255,255,255,.10);
+      --muted: #aab5c6;
+      --gold: #f5a34b;
+    }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: "DM Sans", sans-serif; color: #f8fafc; overflow-x: hidden; }
+    .portal-shell {
+      width: 100%;
+      min-height: calc(100 * min(var(--vh, 1vh), 1vh));
+      background: radial-gradient(circle at 12% 8%, rgba(245,163,75,.16), transparent 28%), radial-gradient(circle at 88% 22%, rgba(49,202,190,.11), transparent 26%), #0f141c;
+    }
+    .star-field {
+      background-image: radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px), radial-gradient(rgba(255,255,255,.22) 1px, transparent 1px);
+      background-position: 0 0, 19px 29px;
+      background-size: 46px 46px, 71px 71px;
+      opacity: .28;
+    }
+    .display-font { font-family: "Fraunces", serif; }
+    .glass-panel { background: rgba(25,33,45,.84); border: 1px solid var(--line); box-shadow: 0 18px 50px rgba(0,0,0,.22); backdrop-filter: blur(14px); }
+    .focus-ring:focus-visible { outline: 3px solid #f5a34b; outline-offset: 3px; }
+    .model-card { transition: transform .22s ease, border-color .22s ease, background .22s ease, box-shadow .22s ease; }
+    .model-card:hover { transform: translateY(-5px); border-color: rgba(245,163,75,.7); background: rgba(40,52,69,.96); box-shadow: 0 16px 30px rgba(0,0,0,.24); }
+    .house-card { position: relative; overflow: hidden; }
+    .house-card::after { content:""; position:absolute; width:130px; height:130px; right:-44px; bottom:-58px; border-radius:999px; opacity:.16; background:currentColor; filter:blur(5px); }
+    .house-symbol { width:48px; height:48px; display:grid; place-items:center; border-radius:16px; border:1px solid currentColor; background:rgba(255,255,255,.04); }
+    .portal-view { display: none; animation: lift .34s ease both; }
+    .portal-view.is-visible { display: block; }
+    @keyframes lift { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { animation: reveal .6s ease both; }
+    .delay-1 { animation-delay:.1s; } .delay-2 { animation-delay:.2s; } .delay-3 { animation-delay:.3s; }
+    @keyframes reveal { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+    .detail-rule { position: relative; padding-left: 1.15rem; }
+    .detail-rule::before { content:""; position:absolute; left:0; top:.58rem; width:.42rem; height:.42rem; border-radius:999px; background:currentColor; }
+    .example-image { min-height: 260px; }
+  </style>
+  <script src="/_sdk/b3bf9e8ac58e6ad6.data_sdk.js" type="text/javascript" integrity="sha512-otc1u9NYq9Ms5Jt//7vmhrrqR5CLPr8Jdgs6741gqniClfLMcfmC+jK/cKuQdhLv6G0esJ/FzaMS9tv0T/vj/Q=="></script>
+  <script src="/_sdk/a27879be4562f807.resizing_sdk.js" type="text/javascript" integrity="sha512-trcxRwz+QLrzK0Dqg95xqVRryR7WtWui2YopXyzOIr3WMde3j/xCRgT63/b/EAg7klDsAOuHzoRgoryhwm8QFw=="></script>
+ </head>
+ <body data-template-id="__page-root">
+  <div class="portal-shell relative">
+   <div class="star-field pointer-events-none absolute inset-0"></div>
+   <header class="relative z-20 w-full border-b border-white/10">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 py-5 lg:px-8" aria-label="Navegação principal">
+     <button id="brand-button" type="button" class="focus-ring flex items-center gap-3 rounded-lg text-left"> <span class="grid h-10 w-10 place-items-center rounded-xl border border-amber-300/35 bg-amber-400/10 text-amber-300"> <i data-lucide="sparkles" aria-hidden="true"></i> </span> <span data-template-id="nav-brand" class="canva-text text-sm font-bold uppercase tracking-[.18em]"></span> </button>
+     <div class="hidden items-center gap-6 text-sm text-slate-300 md:flex">
+      <a data-template-id="nav-models" class="canva-link focus-ring rounded px-1 py-1 hover:text-white" href="#modelos"></a> <a data-template-id="nav-houses" class="canva-link focus-ring rounded px-1 py-1 hover:text-white" href="#casas"></a>
+     </div>
+    </nav>
+   </header>
+   <main class="relative z-10">
+    <div id="library-view" class="portal-view is-visible">
+     <section id="inicio" class="mx-auto grid max-w-7xl items-center gap-10 px-5 py-14 lg:grid-cols-[1.05fr_.95fr] lg:px-8 lg:py-20">
+      <div>
+       <p data-template-id="hero-eyebrow" class="canva-text reveal mb-5 text-xs font-bold uppercase tracking-[.22em]"></p>
+       <h1 data-template-id="hero-title" class="canva-text display-font reveal delay-1 max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"></h1>
+       <p data-template-id="hero-description" class="canva-text reveal delay-2 mt-6 max-w-2xl text-lg leading-relaxed text-slate-300"></p>
+       <div class="reveal delay-3 mt-9 flex flex-wrap gap-3">
+        <a data-template-id="explore-button" class="canva-button focus-ring inline-flex items-center gap-2 rounded-xl px-5 py-3 font-bold transition hover:brightness-110" href="#modelos"><span data-template-id="explore-button-label" class="canva-text"></span><i data-lucide="arrow-down" class="h-4 w-4" aria-hidden="true"></i></a> <a data-template-id="houses-button" class="canva-button focus-ring inline-flex items-center gap-2 rounded-xl border px-5 py-3 font-semibold transition hover:bg-white/10" href="#casas"><span data-template-id="houses-button-label" class="canva-text"></span><i data-lucide="shield" class="h-4 w-4" aria-hidden="true"></i></a>
+       </div>
+      </div>
+      <div data-template-id="houses-banner-panel" class="canva-panel glass-panel relative overflow-hidden rounded-3xl p-3">
+       <img data-template-id="houses-banner-image" loading="lazy" class="canva-image h-auto w-full rounded-2xl object-cover">
+       <div class="pointer-events-none absolute inset-x-3 bottom-3 rounded-b-2xl bg-gradient-to-t from-[#11161f]/85 to-transparent px-5 pb-5 pt-16">
+        <p data-template-id="banner-caption" class="canva-text text-sm font-semibold"></p>
+       </div>
+      </div>
+     </section>
+     <section id="modelos" class="mx-auto max-w-7xl px-5 py-12 lg:px-8">
+      <div class="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+       <div>
+        <p data-template-id="models-eyebrow" class="canva-text text-xs font-bold uppercase tracking-[.22em]"></p>
+        <h2 data-template-id="models-title" class="canva-text display-font mt-3 text-3xl font-semibold sm:text-4xl"></h2>
+        <p data-template-id="models-note" class="canva-text mt-2 text-sm text-slate-400"></p>
+       </div>
+       <p data-template-id="models-helper" class="canva-text max-w-md text-sm leading-relaxed text-slate-400"></p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><button type="button" data-open-view="cliente" class="model-card focus-ring glass-panel rounded-2xl p-5 text-left"><span data-template-id="client-card-icon" class="canva-tag mb-5 inline-grid h-10 w-10 place-items-center rounded-xl"></span><p data-template-id="client-card-number" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p><h3 data-template-id="client-card-title" class="canva-text mt-3 font-bold"></h3><p data-template-id="client-card-description" class="canva-text mt-2 text-sm leading-relaxed text-slate-400"></p><span class="mt-6 inline-flex items-center gap-2 text-sm font-bold"><span data-template-id="client-card-cta" class="canva-text"></span><i data-lucide="arrow-right" class="h-4 w-4" aria-hidden="true"></i></span></button> <button type="button" data-open-view="interno" class="model-card focus-ring glass-panel rounded-2xl p-5 text-left"><span data-template-id="internal-card-icon" class="canva-tag mb-5 inline-grid h-10 w-10 place-items-center rounded-xl"></span><p data-template-id="internal-card-number" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p><h3 data-template-id="internal-card-title" class="canva-text mt-3 font-bold"></h3><p data-template-id="internal-card-description" class="canva-text mt-2 text-sm leading-relaxed text-slate-400"></p><span class="mt-6 inline-flex items-center gap-2 text-sm font-bold"><span data-template-id="internal-card-cta" class="canva-text"></span><i data-lucide="arrow-right" class="h-4 w-4" aria-hidden="true"></i></span></button> <button type="button" data-open-view="diretoria" class="model-card focus-ring glass-panel rounded-2xl p-5 text-left"><span data-template-id="board-card-icon" class="canva-tag mb-5 inline-grid h-10 w-10 place-items-center rounded-xl"></span><p data-template-id="board-card-number" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p><h3 data-template-id="board-card-title" class="canva-text mt-3 font-bold"></h3><p data-template-id="board-card-description" class="canva-text mt-2 text-sm leading-relaxed text-slate-400"></p><span class="mt-6 inline-flex items-center gap-2 text-sm font-bold"><span data-template-id="board-card-cta" class="canva-text"></span><i data-lucide="arrow-right" class="h-4 w-4" aria-hidden="true"></i></span></button> <button type="button" data-open-view="excel" class="model-card focus-ring glass-panel rounded-2xl p-5 text-left"><span data-template-id="excel-card-icon" class="canva-tag mb-5 inline-grid h-10 w-10 place-items-center rounded-xl"></span><p data-template-id="excel-card-number" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p><h3 data-template-id="excel-card-title" class="canva-text mt-3 font-bold"></h3><p data-template-id="excel-card-description" class="canva-text mt-2 text-sm leading-relaxed text-slate-400"></p><span class="mt-6 inline-flex items-center gap-2 text-sm font-bold"><span data-template-id="excel-card-cta" class="canva-text"></span><i data-lucide="arrow-right" class="h-4 w-4" aria-hidden="true"></i></span></button>
+      </div>
+     </section>
+     <section id="casas" class="mx-auto max-w-7xl px-5 py-14 lg:px-8">
+      <div class="mb-8">
+       <p data-template-id="houses-eyebrow" class="canva-text text-xs font-bold uppercase tracking-[.22em]"></p>
+       <h2 data-template-id="houses-title" class="canva-text display-font mt-3 text-3xl font-semibold sm:text-4xl"></h2>
+       <p data-template-id="houses-description" class="canva-text mt-3 max-w-2xl leading-relaxed text-slate-400"></p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+       <article data-template-id="alicerce-house-card" class="canva-card house-card rounded-2xl border p-6" style="color:#f5a34b">
+        <div class="house-symbol"><span aria-hidden="true" class="text-2xl">🕷️</span>
+        </div>
+        <h3 data-template-id="alicerce-house-title" class="canva-text mt-6 text-xl font-bold"></h3>
+        <p data-template-id="alicerce-house-role" class="canva-text mt-2 text-sm font-semibold"></p>
+        <p data-template-id="alicerce-house-description" class="canva-text mt-5 text-sm leading-relaxed text-slate-300"></p>
+       </article>
+       <article data-template-id="prumo-house-card" class="canva-card house-card rounded-2xl border p-6" style="color:#9a92ff">
+        <div class="house-symbol"><span aria-hidden="true" class="text-2xl">🐝</span>
+        </div>
+        <h3 data-template-id="prumo-house-title" class="canva-text mt-6 text-xl font-bold"></h3>
+        <p data-template-id="prumo-house-role" class="canva-text mt-2 text-sm font-semibold"></p>
+        <p data-template-id="prumo-house-description" class="canva-text mt-5 text-sm leading-relaxed text-slate-300"></p>
+       </article>
+       <article data-template-id="prisma-house-card" class="canva-card house-card rounded-2xl border p-6" style="color:#32cabe">
+        <div class="house-symbol"><span aria-hidden="true" class="text-2xl">🦅</span>
+        </div>
+        <h3 data-template-id="prisma-house-title" class="canva-text mt-6 text-xl font-bold"></h3>
+        <p data-template-id="prisma-house-role" class="canva-text mt-2 text-sm font-semibold"></p>
+        <p data-template-id="prisma-house-description" class="canva-text mt-5 text-sm leading-relaxed text-slate-300"></p>
+       </article>
+       <article data-template-id="vigilia-house-card" class="canva-card house-card rounded-2xl border p-6" style="color:#fa6682">
+        <div class="house-symbol"><span aria-hidden="true" class="text-2xl">🐺</span>
+        </div>
+        <h3 data-template-id="vigilia-house-title" class="canva-text mt-6 text-xl font-bold"></h3>
+        <p data-template-id="vigilia-house-role" class="canva-text mt-2 text-sm font-semibold"></p>
+        <p data-template-id="vigilia-house-description" class="canva-text mt-5 text-sm leading-relaxed text-slate-300"></p>
+       </article>
+      </div>
+     </section>
+    </div>
+    <section id="detail-cliente" class="portal-view detail-view mx-auto max-w-7xl px-5 py-10 lg:px-8 lg:py-14">
+     <button type="button" data-back class="focus-ring mb-8 inline-flex items-center gap-2 rounded-lg text-sm font-bold text-amber-300 hover:text-amber-200"><i data-lucide="arrow-left" class="h-4 w-4" aria-hidden="true"></i><span data-template-id="back-client"></span></button>
+     <p data-template-id="client-detail-eyebrow" class="canva-text text-xs font-bold uppercase tracking-[.22em]"></p>
+     <h1 data-template-id="client-detail-title" class="canva-text display-font mt-3 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl"></h1>
+     <p data-template-id="client-detail-summary" class="canva-text mt-5 max-w-3xl text-lg leading-relaxed text-slate-300"></p>
+     <div class="mt-10 grid gap-4 md:grid-cols-2">
+      <article data-template-id="client-objective-card" class="canva-card glass-panel rounded-2xl p-6">
+       <p data-template-id="client-objective-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="client-objective-title" class="canva-text mt-3 text-xl font-bold"></h2>
+       <p data-template-id="client-objective-copy" class="canva-text mt-3 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="client-audience-card" class="canva-card glass-panel rounded-2xl p-6">
+       <p data-template-id="client-audience-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="client-audience-title" class="canva-text mt-3 text-xl font-bold"></h2>
+       <p data-template-id="client-audience-copy" class="canva-text mt-3 leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <div class="mt-4 grid gap-4 lg:grid-cols-2">
+      <article data-template-id="client-structure-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="client-structure-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="client-structure-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="client-structure-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="client-kpi-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="client-kpi-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="client-kpi-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="client-kpi-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <div class="mt-4 grid gap-4 lg:grid-cols-[.9fr_1.1fr]">
+      <article data-template-id="client-layout-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="client-layout-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="client-layout-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="client-layout-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="client-example-card" class="canva-card glass-panel overflow-hidden rounded-2xl p-3"><img data-template-id="client-example-image" loading="lazy" class="canva-image example-image w-full rounded-xl object-cover">
+       <p data-template-id="client-example-caption" class="canva-text px-3 pb-2 pt-4 text-sm leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <article data-template-id="client-rules-card" class="canva-card glass-panel mt-4 rounded-2xl p-7">
+      <p data-template-id="client-rules-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+      <h2 data-template-id="client-rules-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+      <div class="mt-5 grid gap-3 md:grid-cols-3">
+       <p data-template-id="client-rule-one" class="canva-text detail-rule leading-relaxed"></p>
+       <p data-template-id="client-rule-two" class="canva-text detail-rule leading-relaxed"></p>
+       <p data-template-id="client-rule-three" class="canva-text detail-rule leading-relaxed"></p>
+      </div>
+     </article>
+    </section>
+    <section id="detail-interno" class="portal-view detail-view mx-auto max-w-7xl px-5 py-10 lg:px-8 lg:py-14">
+     <button type="button" data-back class="focus-ring mb-8 inline-flex items-center gap-2 rounded-lg text-sm font-bold text-violet-300 hover:text-violet-200"><i data-lucide="arrow-left" class="h-4 w-4" aria-hidden="true"></i><span data-template-id="back-internal"></span></button>
+     <p data-template-id="internal-detail-eyebrow" class="canva-text text-xs font-bold uppercase tracking-[.22em]"></p>
+     <h1 data-template-id="internal-detail-title" class="canva-text display-font mt-3 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl"></h1>
+     <p data-template-id="internal-detail-summary" class="canva-text mt-5 max-w-3xl text-lg leading-relaxed text-slate-300"></p>
+     <div class="mt-10 grid gap-4 md:grid-cols-2">
+      <article data-template-id="internal-objective-card" class="canva-card glass-panel rounded-2xl p-6">
+       <p data-template-id="internal-objective-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="internal-objective-title" class="canva-text mt-3 text-xl font-bold"></h2>
+       <p data-template-id="internal-objective-copy" class="canva-text mt-3 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="internal-audience-card" class="canva-card glass-panel rounded-2xl p-6">
+       <p data-template-id="internal-audience-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="internal-audience-title" class="canva-text mt-3 text-xl font-bold"></h2>
+       <p data-template-id="internal-audience-copy" class="canva-text mt-3 leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <div class="mt-4 grid gap-4 lg:grid-cols-2">
+      <article data-template-id="internal-structure-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="internal-structure-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="internal-structure-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="internal-structure-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="internal-kpi-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="internal-kpi-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="internal-kpi-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="internal-kpi-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <div class="mt-4 grid gap-4 lg:grid-cols-[.9fr_1.1fr]">
+      <article data-template-id="internal-layout-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="internal-layout-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="internal-layout-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="internal-layout-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="internal-example-card" class="canva-card glass-panel overflow-hidden rounded-2xl p-3"><img data-template-id="internal-example-image" loading="lazy" class="canva-image example-image w-full rounded-xl object-cover">
+       <p data-template-id="internal-example-caption" class="canva-text px-3 pb-2 pt-4 text-sm leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <article data-template-id="internal-rules-card" class="canva-card glass-panel mt-4 rounded-2xl p-7">
+      <p data-template-id="internal-rules-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+      <h2 data-template-id="internal-rules-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+      <div class="mt-5 grid gap-3 md:grid-cols-3">
+       <p data-template-id="internal-rule-one" class="canva-text detail-rule leading-relaxed"></p>
+       <p data-template-id="internal-rule-two" class="canva-text detail-rule leading-relaxed"></p>
+       <p data-template-id="internal-rule-three" class="canva-text detail-rule leading-relaxed"></p>
+      </div>
+     </article>
+    </section>
+    <section id="detail-diretoria" class="portal-view detail-view mx-auto max-w-7xl px-5 py-10 lg:px-8 lg:py-14">
+     <button type="button" data-back class="focus-ring mb-8 inline-flex items-center gap-2 rounded-lg text-sm font-bold text-teal-300 hover:text-teal-200"><i data-lucide="arrow-left" class="h-4 w-4" aria-hidden="true"></i><span data-template-id="back-board"></span></button>
+     <p data-template-id="board-detail-eyebrow" class="canva-text text-xs font-bold uppercase tracking-[.22em]"></p>
+     <h1 data-template-id="board-detail-title" class="canva-text display-font mt-3 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl"></h1>
+     <p data-template-id="board-detail-summary" class="canva-text mt-5 max-w-3xl text-lg leading-relaxed text-slate-300"></p>
+     <div class="mt-10 grid gap-4 md:grid-cols-2">
+      <article data-template-id="board-objective-card" class="canva-card glass-panel rounded-2xl p-6">
+       <p data-template-id="board-objective-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="board-objective-title" class="canva-text mt-3 text-xl font-bold"></h2>
+       <p data-template-id="board-objective-copy" class="canva-text mt-3 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="board-audience-card" class="canva-card glass-panel rounded-2xl p-6">
+       <p data-template-id="board-audience-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="board-audience-title" class="canva-text mt-3 text-xl font-bold"></h2>
+       <p data-template-id="board-audience-copy" class="canva-text mt-3 leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <div class="mt-4 grid gap-4 lg:grid-cols-2">
+      <article data-template-id="board-structure-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="board-structure-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="board-structure-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="board-structure-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="board-kpi-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="board-kpi-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="board-kpi-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="board-kpi-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <div class="mt-4 grid gap-4 lg:grid-cols-[.9fr_1.1fr]">
+      <article data-template-id="board-layout-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="board-layout-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="board-layout-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="board-layout-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="board-example-card" class="canva-card glass-panel overflow-hidden rounded-2xl p-3"><img data-template-id="board-example-image" loading="lazy" class="canva-image example-image w-full rounded-xl object-cover">
+       <p data-template-id="board-example-caption" class="canva-text px-3 pb-2 pt-4 text-sm leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <article data-template-id="board-rules-card" class="canva-card glass-panel mt-4 rounded-2xl p-7">
+      <p data-template-id="board-rules-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+      <h2 data-template-id="board-rules-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+      <div class="mt-5 grid gap-3 md:grid-cols-3">
+       <p data-template-id="board-rule-one" class="canva-text detail-rule leading-relaxed"></p>
+       <p data-template-id="board-rule-two" class="canva-text detail-rule leading-relaxed"></p>
+       <p data-template-id="board-rule-three" class="canva-text detail-rule leading-relaxed"></p>
+      </div>
+     </article>
+    </section>
+    <section id="detail-excel" class="portal-view detail-view mx-auto max-w-7xl px-5 py-10 lg:px-8 lg:py-14">
+     <button type="button" data-back class="focus-ring mb-8 inline-flex items-center gap-2 rounded-lg text-sm font-bold text-rose-300 hover:text-rose-200"><i data-lucide="arrow-left" class="h-4 w-4" aria-hidden="true"></i><span data-template-id="back-excel"></span></button>
+     <p data-template-id="excel-detail-eyebrow" class="canva-text text-xs font-bold uppercase tracking-[.22em]"></p>
+     <h1 data-template-id="excel-detail-title" class="canva-text display-font mt-3 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl"></h1>
+     <p data-template-id="excel-detail-summary" class="canva-text mt-5 max-w-3xl text-lg leading-relaxed text-slate-300"></p>
+     <div class="mt-10 grid gap-4 md:grid-cols-2">
+      <article data-template-id="excel-objective-card" class="canva-card glass-panel rounded-2xl p-6">
+       <p data-template-id="excel-objective-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="excel-objective-title" class="canva-text mt-3 text-xl font-bold"></h2>
+       <p data-template-id="excel-objective-copy" class="canva-text mt-3 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="excel-audience-card" class="canva-card glass-panel rounded-2xl p-6">
+       <p data-template-id="excel-audience-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="excel-audience-title" class="canva-text mt-3 text-xl font-bold"></h2>
+       <p data-template-id="excel-audience-copy" class="canva-text mt-3 leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <div class="mt-4 grid gap-4 lg:grid-cols-2">
+      <article data-template-id="excel-structure-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="excel-structure-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="excel-structure-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="excel-structure-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="excel-kpi-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="excel-kpi-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="excel-kpi-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="excel-kpi-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <div class="mt-4 grid gap-4 lg:grid-cols-[.9fr_1.1fr]">
+      <article data-template-id="excel-layout-card" class="canva-card glass-panel rounded-2xl p-7">
+       <p data-template-id="excel-layout-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+       <h2 data-template-id="excel-layout-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+       <p data-template-id="excel-layout-copy" class="canva-text mt-4 leading-relaxed text-slate-300"></p>
+      </article>
+      <article data-template-id="excel-example-card" class="canva-card glass-panel overflow-hidden rounded-2xl p-3"><img data-template-id="excel-example-image" loading="lazy" class="canva-image example-image w-full rounded-xl object-cover">
+       <p data-template-id="excel-example-caption" class="canva-text px-3 pb-2 pt-4 text-sm leading-relaxed text-slate-300"></p>
+      </article>
+     </div>
+     <article data-template-id="excel-rules-card" class="canva-card glass-panel mt-4 rounded-2xl p-7">
+      <p data-template-id="excel-rules-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]"></p>
+      <h2 data-template-id="excel-rules-title" class="canva-text mt-3 text-2xl font-bold"></h2>
+      <div class="mt-5 grid gap-3 md:grid-cols-3">
+       <p data-template-id="excel-rule-one" class="canva-text detail-rule leading-relaxed"></p>
+       <p data-template-id="excel-rule-two" class="canva-text detail-rule leading-relaxed"></p>
+       <p data-template-id="excel-rule-three" class="canva-text detail-rule leading-relaxed"></p>
+      </div>
+     </article>
+    </section>
+   </main>
+   <footer class="relative z-10 w-full border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-5 py-7 text-center lg:px-8">
+     <p data-template-id="footer-text" class="canva-text text-sm text-slate-400"></p>
+    </div>
+   </footer>
+  </div>
+  <script src="/_sdk/489148d8756906ef.editing_sdk.js" integrity="sha512-hxxSbMNp1t+UEu3j/dIQUU4MJnmsCo0Gs3iQVVS706vrCJ3Yt2+ySOlfJEaPyiyQVLjZRmn1dNVqg6M40VZZHQ=="></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+
+      const library = document.getElementById("library-view");
+      const detailViews = document.querySelectorAll(".detail-view");
+
+      function showLibrary() {
+        detailViews.forEach((view) => view.classList.remove("is-visible"));
+        library.classList.add("is-visible");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function showDetail(name) {
+        library.classList.remove("is-visible");
+        detailViews.forEach((view) => view.classList.remove("is-visible"));
+        document.getElementById("detail-" + name).classList.add("is-visible");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      document.querySelectorAll("[data-open-view]").forEach((button) => {
+        button.addEventListener("click", () => showDetail(button.dataset.openView));
+      });
+
+      document.querySelectorAll("[data-back]").forEach((button) => {
+        button.addEventListener("click", showLibrary);
+      });
+
+      document.getElementById("brand-button").addEventListener("click", showLibrary);
+    });
+  </script>
+ </body>
+</html>
