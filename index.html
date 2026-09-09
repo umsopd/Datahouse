@@ -870,6 +870,230 @@
   </div>
 </section>
 
+
+<!-- ============================================ -->
+<!-- SEÇÃO: O ASTROLÁBIO (LAYOUT EXPANDIDO)       -->
+<!-- ============================================ -->
+<section id="astrolabio" class="reveal relative py-16">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Cabeçalho Principal -->
+    <div class="mb-10 text-center">
+      <span class="canva-text text-xs font-bold uppercase tracking-[.16em] text-amber-400">
+        Diagnóstico de Afinidade & Repertório
+      </span>
+      <h2 class="canva-text mt-2 text-3xl sm:text-4xl font-bold text-white">
+        O Astrolábio
+      </h2>
+      <p class="canva-text mt-3 max-w-xl mx-auto text-slate-400 text-sm leading-relaxed">
+        O Astrolábio recomenda. Ele não aloca. Descubra sua Casa Principal, Casa Madrinha e seu PDI.
+      </p>
+    </div>
+
+    <!-- BOTÃO / DESTAQUE DO ASTROLÁBIO (Chapéu Seletor) -->
+    <div id="hat-trigger-container" class="text-center my-10">
+      <button 
+        id="btn-start-astrolabio"
+        type="button" 
+        onclick="startAstrolabio()" 
+        class="group relative inline-flex flex-col items-center justify-center cursor-pointer focus:outline-none"
+      >
+        <!-- Container da Imagem sem Fundo/Borda -->
+        <div class="relative w-52 h-52 sm:w-60 sm:h-60 mb-4 flex items-center justify-center">
+          <img 
+          src="https://i.ibb.co/xKVK9WMN/astrolabio.jpg" 
+            alt="Astrolábio Chapéu Seletor" 
+            class="w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(245,158,11,0.35)] group-hover:drop-shadow-[0_0_35px_rgba(245,158,11,0.7)] group-hover:scale-110 transition-all duration-300"
+            onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/8636/8636081.png';"
+          >
+        </div>
+
+        <!-- Texto de Ação em Destaque -->
+        <span class="text-lg font-bold text-amber-400 group-hover:text-amber-300 flex items-center gap-2 transition-colors">
+          <span>Consultar o Chapéu Seletor</span>
+          <i data-lucide="sparkles" class="h-5 w-5"></i>
+        </span>
+        <span class="text-xs text-slate-400 mt-1 group-hover:text-slate-300 transition-colors">
+          Clique no Astrolábio para descobrir sua casa
+        </span>
+      </button>
+    </div>
+
+    <!-- QUIZ MULTI-STEP (Container do Diagnóstico) -->
+    <div id="quiz-container" class="hidden glass-panel rounded-2xl border border-slate-800 p-8 sm:p-12 shadow-2xl relative">
+      
+      <!-- Topo do Quiz: Barra de Progresso + Botão Voltar ao Início -->
+      <div class="mb-10 space-y-4">
+        <div class="flex items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-amber-400"></span>
+            <span id="step-label" class="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Etapa 1 de 4: Cenários Práticos</span>
+          </div>
+          
+          <!-- Botão para retornar à capa do Astrolábio -->
+          <button 
+            type="button" 
+            onclick="resetToHome()" 
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/80 text-slate-400 hover:text-amber-400 hover:border-amber-500/40 text-xs font-semibold transition"
+            title="Voltar para a capa"
+          >
+            <i data-lucide="rotate-ccw" class="h-3.5 w-3.5"></i>
+            <span>Voltar à Capa</span>
+          </button>
+        </div>
+
+        <!-- Linha da Barra de Progresso -->
+        <div class="flex items-center gap-3">
+          <div class="w-full bg-slate-900 rounded-full h-2.5 border border-slate-800 overflow-hidden">
+            <div id="progress-bar" class="bg-amber-400 h-2.5 rounded-full transition-all duration-500" style="width: 25%;"></div>
+          </div>
+          <span id="step-percentage" class="text-xs font-mono text-amber-400 font-bold shrink-0">25%</span>
+        </div>
+      </div>
+
+      <!-- ETAPA 1: CENÁRIOS PRÁTICOS -->
+      <div id="step-1" class="step-block space-y-10">
+        <div class="space-y-1">
+          <h3 class="text-xl font-bold text-white">Etapa 1: O que você faria de verdade?</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">As opções estão embaralhadas. Escolha a sua reação operacional real.</p>
+        </div>
+
+        <!-- Questão 1 -->
+        <div class="space-y-4">
+          <p class="text-sm sm:text-base font-semibold text-slate-100 leading-snug">
+            1. Um indicador crítico caiu abruptamente no meio do turno. Qual é a sua atitude imediata?
+          </p>
+          <div class="grid grid-cols-1 gap-3">
+            <label class="flex items-center gap-3.5 p-4 rounded-xl border border-slate-800 bg-slate-900/60 hover:border-amber-500/50 hover:bg-slate-900 transition cursor-pointer group">
+              <input type="radio" name="q1" value="alicerce" class="accent-amber-500 h-4 w-4 shrink-0">
+              <span class="text-xs sm:text-sm text-slate-300 group-hover:text-slate-100 transition">Isolo a base atingida e verifico imediatamente os parâmetros do discador e a telefonia.</span>
+            </label>
+            <label class="flex items-center gap-3.5 p-4 rounded-xl border border-slate-800 bg-slate-900/60 hover:border-amber-500/50 hover:bg-slate-900 transition cursor-pointer group">
+              <input type="radio" name="q1" value="prumo" class="accent-amber-500 h-4 w-4 shrink-0">
+              <span class="text-xs sm:text-sm text-slate-300 group-hover:text-slate-100 transition">Cruzo séries históricas hora a hora no banco de dados para diagnosticar a causa raiz analítica.</span>
+            </label>
+            <label class="flex items-center gap-3.5 p-4 rounded-xl border border-slate-800 bg-slate-900/60 hover:border-amber-500/50 hover:bg-slate-900 transition cursor-pointer group">
+              <input type="radio" name="q1" value="prisma" class="accent-amber-500 h-4 w-4 shrink-0">
+              <span class="text-xs sm:text-sm text-slate-300 group-hover:text-slate-100 transition">Ajusto o fluxo da URA e do Agente Virtual para rebalancear a demanda de atendimento de imediato.</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Bloco de Ação/Navegação com maior espaçamento -->
+        <div class="pt-8 mt-8 border-t border-slate-800/80 flex items-center justify-between gap-4">
+          <button type="button" onclick="resetToHome()" class="text-xs font-semibold text-slate-400 hover:text-slate-200 transition">
+            &larr; Cancelar e voltar ao início
+          </button>
+          <button type="button" onclick="goToStep(2)" class="px-6 py-3 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs sm:text-sm hover:bg-amber-400 transition shadow-lg shadow-amber-500/10">
+            Avançar para Competências &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- ETAPA 2: COMPETÊNCIAS -->
+      <div id="step-2" class="step-block hidden space-y-10">
+        <div class="space-y-1">
+          <h3 class="text-xl font-bold text-white">Etapa 2: Raio-X de Competências</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">Avalie seu nível de domínio atual (é o seu repertório hoje, não uma nota de desempenho).</p>
+        </div>
+
+        <div class="space-y-3">
+          <label class="text-sm sm:text-base font-semibold text-slate-100 block">
+            1. Regras, parâmetros e rotinas de discador preditivo
+          </label>
+          <select id="skill1" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl p-4 text-xs sm:text-sm text-slate-200 focus:border-amber-500 outline-none">
+            <option value="1">Nunca fiz</option>
+            <option value="2">Entendo o conceito</option>
+            <option value="3">Faço com autonomia</option>
+            <option value="4">Ensino alguém</option>
+          </select>
+        </div>
+
+        <!-- Bloco de Ação/Navegação com maior espaçamento -->
+        <div class="pt-8 mt-8 border-t border-slate-800/80 flex items-center justify-between gap-4">
+          <button type="button" onclick="goToStep(1)" class="px-5 py-3 rounded-xl border border-slate-700 text-slate-300 text-xs sm:text-sm font-semibold hover:bg-slate-800 transition">
+            &larr; Voltar
+          </button>
+          <button type="button" onclick="goToStep(3)" class="px-6 py-3 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs sm:text-sm hover:bg-amber-400 transition shadow-lg shadow-amber-500/10">
+            Ver Diagnóstico Completo &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- ETAPA 3 & 4: RESULTADO -->
+      <div id="step-3" class="step-block hidden space-y-10">
+        <div class="text-center space-y-2">
+          <span class="text-xs font-mono text-amber-400 uppercase tracking-widest">Resultado do Astrolábio</span>
+          <h3 class="text-2xl sm:text-3xl font-bold text-white">Sua Casa & Cross-Training</h3>
+          <p class="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed">
+            * O Astrolábio recomenda. Ele não aloca. Desempates e adequação às vagas (Alicerce: 3, Prumo: 2, Prisma: 3) são definidos por Coordenação e Supervisão.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <!-- Casa Principal -->
+          <div class="p-6 rounded-2xl border border-amber-500/50 bg-amber-500/10 space-y-2 relative">
+            <span class="absolute top-4 right-4 text-[10px] font-mono px-2.5 py-1 rounded bg-amber-500 text-slate-950 font-bold uppercase">Casa Principal</span>
+            <h4 class="text-2xl font-bold text-white">Prumo</h4>
+            <p class="text-xs text-slate-300 leading-relaxed pt-2">
+              Foco em inteligência analítica, arquitetura de dados, consultas SQL e consistência das métricas.
+            </p>
+          </div>
+
+          <!-- Casa Madrinha -->
+          <div class="p-6 rounded-2xl border border-slate-700 bg-slate-900/80 space-y-2 relative">
+            <span class="absolute top-4 right-4 text-[10px] font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700 uppercase">Cross-Training</span>
+            <h4 class="text-2xl font-bold text-white">Prisma</h4>
+            <p class="text-xs text-slate-400 leading-relaxed pt-2">
+              Desenvolvimento paralelo em automações digitais, Agentes Virtuais e fluxos interativos.
+            </p>
+          </div>
+        </div>
+
+        <!-- Regra da Vigília -->
+        <div class="p-5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-400 flex items-start gap-3">
+          <div class="p-2 rounded-lg bg-slate-800 text-amber-400 shrink-0">
+            <i data-lucide="shield-alert" class="h-5 w-5"></i>
+          </div>
+          <div class="space-y-1">
+            <strong class="text-slate-200 block text-sm">A Vigília não é destino, é turno.</strong>
+            <p class="leading-relaxed">
+              Ninguém mora na Vigília. Todo mundo passa pelo plantão em rodízio contínuo e sai de lá com um selo exclusivo de sustentação operacional.
+            </p>
+          </div>
+        </div>
+
+        <!-- PDI Pronto -->
+        <div class="border-t border-slate-800 pt-6 space-y-3">
+          <h4 class="text-sm font-bold text-white">Seu PDI de Migração Inicial:</h4>
+          <ul class="text-xs text-slate-300 space-y-2.5">
+            <li class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center gap-3">
+              <span class="h-2 w-2 rounded-full bg-amber-400"></span>
+              <span>1. Otimização de consultas SQL e modelos de dados para dashboards.</span>
+            </li>
+            <li class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center gap-3">
+              <span class="h-2 w-2 rounded-full bg-amber-400"></span>
+              <span>2. Mapeamento de regras de transbordo e parametrização de bots.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Ações do Resultado -->
+        <div class="pt-8 mt-8 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-4">
+          <button type="button" onclick="resetToHome()" class="px-5 py-3 rounded-xl border border-slate-700 text-slate-300 text-xs sm:text-sm font-semibold hover:bg-slate-800 transition">
+            &larr; Voltar ao Astrolábio
+          </button>
+          <button type="button" onclick="window.print()" class="px-6 py-3 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs sm:text-sm hover:bg-amber-400 transition shadow-lg shadow-amber-500/10">
+            Imprimir / Salvar PDI
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
    <footer class="relative z-10 w-full border-t border-white/10 mt-16">
     <div class="mx-auto max-w-7xl px-5 py-7 text-center lg:px-8">
      <p class="canva-text text-sm text-slate-400">The Data House &copy; 2026 — Governança e Padronização de Relatórios</p>
@@ -883,7 +1107,7 @@
 
       const library = document.getElementById("library-view");
       const detailViews = document.querySelectorAll(".detail-view");
-
+ 
       function showLibrary() {
         detailViews.forEach((view) => view.classList.remove("is-visible"));
         library.classList.add("is-visible");
@@ -911,6 +1135,70 @@
       document.getElementById("brand-button").addEventListener("click", showLibrary);
     });
   </script>
+
+<script>
+  // Abre o formulário ao clicar no Astrolábio
+  function startAstrolabio() {
+    const triggerContainer = document.getElementById('hat-trigger-container');
+    const quizContainer = document.getElementById('quiz-container');
+
+    if (triggerContainer && quizContainer) {
+      triggerContainer.classList.add('hidden');
+      quizContainer.classList.remove('hidden');
+      goToStep(1);
+    }
+  }
+
+  // Volta para a capa com a imagem do Astrolábio
+  function resetToHome() {
+    const triggerContainer = document.getElementById('hat-trigger-container');
+    const quizContainer = document.getElementById('quiz-container');
+
+    if (triggerContainer && quizContainer) {
+      quizContainer.classList.add('hidden');
+      triggerContainer.classList.remove('hidden');
+    }
+  }
+
+  // Transição de etapas com barra de progresso
+  function goToStep(stepNumber) {
+    document.querySelectorAll('.step-block').forEach(el => el.classList.add('hidden'));
+
+    const currentStep = document.getElementById(`step-${stepNumber}`);
+    if (currentStep) {
+      currentStep.classList.remove('hidden');
+    }
+
+    const progressBar = document.getElementById('progress-bar');
+    const stepLabel = document.getElementById('step-label');
+    const stepPercentage = document.getElementById('step-percentage');
+
+    const stepInfo = {
+      1: { width: '25%', text: 'Etapa 1 de 4: Cenários Práticos', percent: '25%' },
+      2: { width: '50%', text: 'Etapa 2 de 4: Raio-X de Competências', percent: '50%' },
+      3: { width: '100%', text: 'Etapa 3 e 4: Recomendação & PDI', percent: '100%' }
+    };
+
+    if (stepInfo[stepNumber]) {
+      if (progressBar) progressBar.style.width = stepInfo[stepNumber].width;
+      if (stepLabel) stepLabel.innerText = stepInfo[stepNumber].text;
+      if (stepPercentage) stepPercentage.innerText = stepInfo[stepNumber].percent;
+    }
+
+    // Recarrega os ícones caso a biblioteca Lucide esteja em uso
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  }
+
+  // Garantia do evento de clique ao carregar o DOM
+  document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('btn-start-astrolabio');
+    if (btn) {
+      btn.addEventListener('click', startAstrolabio);
+    }
+  });
+</script>
   
  </body>
 </html>
