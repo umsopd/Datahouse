@@ -235,12 +235,28 @@
       display: none !important;
     }
 
-    /* Astrolábio em maior destaque na página principal */
+    /* Astrolábio: imagem maior e espaçamento mais compacto */
+    #astrolabio .astrolabio-heading {
+      margin-bottom: 1.75rem;
+    }
+    #astrolabio #hat-trigger-container {
+      margin-top: 0;
+      margin-bottom: 2.5rem;
+    }
     #astrolabio .astrolabio-hero-image {
-      width: clamp(18rem, 34vw, 26rem);
-      height: clamp(18rem, 34vw, 26rem);
-      margin-left: auto;
-      margin-right: auto;
+      width: min(92vw, 52rem);
+      height: auto;
+      aspect-ratio: 16 / 9;
+      margin: 0 auto 1.35rem;
+      overflow: hidden;
+      border-radius: 1rem;
+    }
+    #astrolabio .astrolabio-hero-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
 
     /* Botão flutuante Voltar ao topo */
@@ -281,9 +297,17 @@
     }
 
     @media (max-width: 639px) {
+      #astrolabio .astrolabio-heading {
+        margin-bottom: 1.35rem;
+      }
+      #astrolabio #hat-trigger-container {
+        margin-bottom: 2rem;
+      }
       #astrolabio .astrolabio-hero-image {
-        width: min(82vw, 20rem);
-        height: min(82vw, 20rem);
+        width: min(94vw, 34rem);
+        height: auto;
+        aspect-ratio: 16 / 9;
+        margin-bottom: 1rem;
       }
       #back-to-top {
         right: .85rem;
@@ -1542,7 +1566,7 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Cabeçalho Principal -->
-    <div class="mb-10 text-center">
+    <div class="astrolabio-heading mb-10 text-center">
       <span class="canva-text text-xs font-bold uppercase tracking-[.16em] text-amber-400">
         Diagnóstico de Afinidade & Repertório
       </span>
