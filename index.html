@@ -294,6 +294,307 @@
       }
     }
 
+
+
+    /* =========================================================
+       REVELAÇÃO IMPACTANTE DO ASTROLÁBIO
+       A animação é visual; a casa já deve vir definida pela regra
+       de pontuação. Enquanto o questionário é fictício, o demo usa
+       Prumo como Casa Principal e Prisma como Casa Madrinha.
+       ========================================================= */
+    #astrolabio-reveal {
+      width: 100%;
+      animation: astroRevealIn .35s ease both;
+    }
+    #astrolabio-reveal.hidden { display: none !important; }
+    .astro-reveal-stage {
+      --result-color: #fbbf24;
+      position: relative;
+      overflow: hidden;
+      min-height: 560px;
+      border-radius: 1.4rem;
+      border: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(circle at 50% 43%, color-mix(in srgb, var(--result-color) 11%, transparent), transparent 31%),
+        radial-gradient(circle at 16% 14%, rgba(148,163,184,.08), transparent 22%),
+        linear-gradient(180deg, rgba(6,10,18,.98), rgba(10,15,25,.98));
+      box-shadow: inset 0 0 70px rgba(0,0,0,.44), 0 24px 60px rgba(0,0,0,.24);
+      isolation: isolate;
+    }
+    .astro-reveal-stage::before,
+    .astro-reveal-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .astro-reveal-stage::before {
+      z-index: -2;
+      opacity: .46;
+      background-image:
+        radial-gradient(rgba(255,255,255,.8) .7px, transparent .8px),
+        radial-gradient(rgba(255,255,255,.35) .7px, transparent .8px);
+      background-size: 38px 38px, 67px 67px;
+      background-position: 5px 9px, 21px 33px;
+      animation: astroStarDrift 14s linear infinite;
+    }
+    .astro-reveal-stage::after {
+      z-index: -1;
+      opacity: 0;
+      background: radial-gradient(circle at 50% 44%, color-mix(in srgb, var(--result-color) 28%, transparent), transparent 40%);
+      transition: opacity .7s ease;
+    }
+    .astro-reveal-stage.is-final::after { opacity: 1; }
+
+    .astro-reveal-visual {
+      position: relative;
+      width: min(100%, 680px);
+      height: 385px;
+      margin: 0 auto;
+    }
+    .astro-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 225px;
+      height: 225px;
+      transform: translate(-50%, -48%);
+      display: grid;
+      place-items: center;
+    }
+    .astro-core::before {
+      content: "";
+      position: absolute;
+      inset: -28px;
+      border-radius: 50%;
+      border: 1px solid rgba(251,191,36,.18);
+      box-shadow: 0 0 45px rgba(245,158,11,.09), inset 0 0 28px rgba(245,158,11,.05);
+      animation: astroRingBreath 1.8s ease-in-out infinite;
+    }
+    .astro-core::after {
+      content: "";
+      position: absolute;
+      inset: -54px;
+      border-radius: 50%;
+      border: 1px dashed rgba(148,163,184,.17);
+      animation: astroOrbit 10s linear infinite;
+    }
+    .astro-spinner {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      transform-origin: center;
+    }
+    .astro-reveal-stage.is-running .astro-spinner {
+      animation: astroSpin 2.1s cubic-bezier(.4,0,.2,1) infinite;
+    }
+    .astro-reveal-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 22px rgba(245,158,11,.30));
+      transition: filter .7s ease, transform .7s cubic-bezier(.2,.8,.2,1);
+    }
+    .astro-reveal-stage.is-running .astro-reveal-image {
+      animation: astroImagePulse 1s ease-in-out infinite alternate;
+    }
+    .astro-reveal-stage.is-final .astro-spinner { animation: none; }
+    .astro-reveal-stage.is-final .astro-reveal-image {
+      transform: scale(1.08);
+      filter: drop-shadow(0 0 18px var(--result-color)) drop-shadow(0 0 42px color-mix(in srgb, var(--result-color) 48%, transparent));
+    }
+    .astro-energy-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 285px;
+      height: 285px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: rgba(251,191,36,.62);
+      border-right-color: rgba(45,212,191,.24);
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 28px rgba(245,158,11,.08);
+      animation: astroOrbit 3.6s linear infinite reverse;
+      pointer-events: none;
+    }
+    .astro-scan-line {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 335px;
+      height: 1px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, rgba(251,191,36,.75), transparent 82%);
+      opacity: .72;
+      animation: astroSweep 2.2s linear infinite;
+      pointer-events: none;
+    }
+    .astro-reveal-stage.is-final .astro-energy-ring,
+    .astro-reveal-stage.is-final .astro-scan-line { opacity: .22; }
+
+    .astro-house-rune {
+      --house-color: #94a3b8;
+      position: absolute;
+      width: 104px;
+      padding: 8px 8px 7px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(15,23,42,.64);
+      text-align: center;
+      opacity: .48;
+      filter: saturate(.55);
+      transform: scale(.94);
+      transition: opacity .13s ease, transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease, filter .18s ease;
+      backdrop-filter: blur(8px);
+    }
+    .astro-house-rune img {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px transparent);
+      transition: filter .18s ease, transform .18s ease;
+    }
+    .astro-house-rune span {
+      display: block;
+      margin-top: 2px;
+      color: #94a3b8;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: color .18s ease;
+    }
+    .astro-house-rune[data-house="Alicerce"] { --house-color: #f5a34b; left: 5%; top: 14%; }
+    .astro-house-rune[data-house="Prumo"]   { --house-color: #8b86ff; right: 5%; top: 14%; }
+    .astro-house-rune[data-house="Prisma"]  { --house-color: #32cabe; left: 8%; bottom: 5%; }
+    .astro-house-rune[data-house="Vigília"] { --house-color: #fa6682; right: 8%; bottom: 5%; }
+    .astro-house-rune.is-scanning,
+    .astro-house-rune.is-selected {
+      opacity: 1;
+      filter: saturate(1);
+      transform: scale(1.08);
+      border-color: color-mix(in srgb, var(--house-color) 68%, transparent);
+      background: color-mix(in srgb, var(--house-color) 11%, rgba(15,23,42,.88));
+      box-shadow: 0 0 18px color-mix(in srgb, var(--house-color) 26%, transparent), inset 0 0 18px color-mix(in srgb, var(--house-color) 7%, transparent);
+    }
+    .astro-house-rune.is-scanning img,
+    .astro-house-rune.is-selected img {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 13px color-mix(in srgb, var(--house-color) 76%, transparent));
+    }
+    .astro-house-rune.is-scanning span,
+    .astro-house-rune.is-selected span { color: var(--house-color); }
+    .astro-house-rune.is-selected {
+      transform: scale(1.16);
+      animation: astroWinnerPulse .78s ease-in-out 2;
+      box-shadow: 0 0 25px color-mix(in srgb, var(--house-color) 46%, transparent), 0 0 62px color-mix(in srgb, var(--house-color) 18%, transparent);
+    }
+
+    .astro-reveal-copy {
+      position: relative;
+      z-index: 3;
+      margin: -2px auto 0;
+      padding: 0 24px 24px;
+      max-width: 620px;
+      text-align: center;
+    }
+    .astro-reveal-kicker {
+      color: #fbbf24;
+      font-size: .69rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .astro-reveal-title {
+      margin-top: 8px;
+      color: #f8fafc;
+      font-size: clamp(1.3rem, 3vw, 1.85rem);
+      line-height: 1.2;
+      font-weight: 800;
+      transition: color .45s ease, transform .45s ease;
+    }
+    .astro-reveal-subtitle {
+      margin: 8px auto 0;
+      max-width: 500px;
+      color: #94a3b8;
+      font-size: .8rem;
+      line-height: 1.6;
+    }
+    .astro-reveal-result-name {
+      display: block;
+      margin-top: 4px;
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.25rem, 6vw, 3.8rem);
+      line-height: 1;
+      font-weight: 700;
+      color: var(--result-color);
+      text-shadow: 0 0 28px color-mix(in srgb, var(--result-color) 40%, transparent);
+      opacity: 0;
+      transform: translateY(10px) scale(.96);
+      transition: opacity .5s ease .08s, transform .6s cubic-bezier(.2,.8,.2,1) .08s;
+    }
+    .astro-reveal-stage.is-final .astro-reveal-result-name {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .astro-reveal-actions {
+      display: flex;
+      justify-content: center;
+      padding: 0 20px 18px;
+    }
+    .astro-skip-button {
+      border: 0;
+      color: #64748b;
+      font-size: .7rem;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color .18s ease;
+    }
+    .astro-skip-button:hover { color: #cbd5e1; }
+
+    @keyframes astroRevealIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes astroStarDrift { from { background-position:5px 9px,21px 33px; } to { background-position:43px 47px,88px 100px; } }
+    @keyframes astroOrbit { to { transform: translate(-50%, -50%) rotate(360deg); } }
+    @keyframes astroSweep { to { transform: rotate(360deg); } }
+    @keyframes astroRingBreath { 0%,100% { transform:scale(.96); opacity:.5; } 50% { transform:scale(1.04); opacity:1; } }
+    @keyframes astroSpin { 0% { transform:rotate(0deg) scale(.97); } 50% { transform:rotate(180deg) scale(1.02); } 100% { transform:rotate(360deg) scale(.97); } }
+    @keyframes astroImagePulse { from { filter:drop-shadow(0 0 16px rgba(245,158,11,.22)); } to { filter:drop-shadow(0 0 34px rgba(245,158,11,.55)); } }
+    @keyframes astroWinnerPulse { 0%,100% { transform:scale(1.14); } 50% { transform:scale(1.22); } }
+
+    @media (max-width: 639px) {
+      .astro-reveal-stage { min-height: 515px; }
+      .astro-reveal-visual { height: 350px; }
+      .astro-core { width: 174px; height: 174px; }
+      .astro-core::before { inset:-20px; }
+      .astro-core::after { inset:-39px; }
+      .astro-energy-ring { width: 220px; height: 220px; }
+      .astro-scan-line { width: 250px; }
+      .astro-house-rune { width: 78px; padding:6px; border-radius:14px; }
+      .astro-house-rune img { width:54px; height:54px; }
+      .astro-house-rune span { font-size:.56rem; letter-spacing:.04em; }
+      .astro-house-rune[data-house="Alicerce"] { left:1%; top:12%; }
+      .astro-house-rune[data-house="Prumo"] { right:1%; top:12%; }
+      .astro-house-rune[data-house="Prisma"] { left:3%; bottom:4%; }
+      .astro-house-rune[data-house="Vigília"] { right:3%; bottom:4%; }
+      .astro-reveal-copy { padding-left:18px; padding-right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .astro-reveal-stage::before,
+      .astro-core::before,
+      .astro-core::after,
+      .astro-spinner,
+      .astro-reveal-image,
+      .astro-energy-ring,
+      .astro-scan-line,
+      .astro-house-rune.is-selected { animation: none !important; }
+    }
+
 </style>
  </head>
  <body>
@@ -474,7 +775,7 @@
          <li>Governança das definições</li>
          <li>Qualidade e consistência</li>
         </ul>
-        <p class="house-stack"><strong>Especialidades:</strong> Modelagem · Métricas · Qualidade</p>
+        <p class="house-stack"><strong>Especialidades:</strong> modelagem · métricas · qualidade</p>
        </article>
 
        <article class="house-pro" style="--house:#32cabe;">
@@ -494,7 +795,7 @@
          <li>Investigação de causa-raiz</li>
          <li>Modelos preditivos</li>
         </ul>
-        <p class="house-stack"><strong>Stack principal:</strong> Power BI · Estudos · ML</p>
+        <p class="house-stack"><strong>Stack principal:</strong> Power BI · estudos · ML</p>
        </article>
 
        <article class="house-pro" style="--house:#fa6682;">
@@ -514,7 +815,7 @@
          <li>Alertas e incidentes</li>
          <li>SLA em produção</li>
         </ul>
-        <p class="house-stack"><strong>Especialidades:</strong> Monitoramento · Plantão · Alertas</p>
+        <p class="house-stack"><strong>Especialidades:</strong> monitoramento · plantão · alertas</p>
         <div class="vigilia-note"><strong>A Vigília não é destino, é turno.</strong> Ninguém “mora” nela: o plantão funciona em rodízio e todos passam pela sustentação.</div>
        </article>
       </div>
@@ -1304,6 +1605,56 @@
         </div>
       </div>
 
+
+
+      <!-- REVELAÇÃO VISUAL DO RESULTADO -->
+      <div id="astrolabio-reveal" class="hidden" aria-live="polite" aria-label="Leitura do resultado do Astrolábio">
+        <div id="astro-reveal-stage" class="astro-reveal-stage">
+          <div class="astro-reveal-visual" aria-hidden="true">
+            <div class="astro-house-rune" data-house="Alicerce">
+              <img alt="">
+              <span>Alicerce</span>
+            </div>
+            <div class="astro-house-rune" data-house="Prumo">
+              <img alt="">
+              <span>Prumo</span>
+            </div>
+            <div class="astro-house-rune" data-house="Prisma">
+              <img alt="">
+              <span>Prisma</span>
+            </div>
+            <div class="astro-house-rune" data-house="Vigília">
+              <img alt="">
+              <span>Vigília</span>
+            </div>
+
+            <div class="astro-core">
+              <div class="astro-energy-ring"></div>
+              <div class="astro-scan-line"></div>
+              <div class="astro-spinner">
+                <img
+                  class="astro-reveal-image"
+                  src="https://i.ibb.co/xKVK9WMN/astrolabio.jpg"
+                  alt=""
+                  onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/8636/8636081.png';"
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="astro-reveal-copy">
+            <div id="astro-reveal-kicker" class="astro-reveal-kicker">Cruzando afinidade & repertório</div>
+            <h3 id="astro-reveal-title" class="astro-reveal-title">O Astrolábio está interpretando seus sinais...</h3>
+            <p id="astro-reveal-subtitle" class="astro-reveal-subtitle">Cenários práticos, repertório técnico e afinidade estão sendo combinados para formar a recomendação.</p>
+            <strong id="astro-reveal-result-name" class="astro-reveal-result-name"></strong>
+          </div>
+
+          <div class="astro-reveal-actions">
+            <button id="astro-skip-button" type="button" class="astro-skip-button">Revelar resultado agora</button>
+          </div>
+        </div>
+      </div>
+
       <!-- ETAPA 1: CENÁRIOS PRÁTICOS -->
       <div id="step-1" class="step-block space-y-10">
         <div class="space-y-1">
@@ -1387,7 +1738,7 @@
           <!-- Casa Principal -->
           <div class="p-6 rounded-2xl border border-amber-500/50 bg-amber-500/10 space-y-2 relative">
             <span class="absolute top-4 right-4 text-[10px] font-mono px-2.5 py-1 rounded bg-amber-500 text-slate-950 font-bold uppercase">Casa Principal</span>
-            <h4 class="text-2xl font-bold text-white">Prumo</h4>
+            <h4 id="result-main-house" class="text-2xl font-bold text-white">Prumo</h4>
             <p class="text-xs text-slate-300 leading-relaxed pt-2">
               Foco em inteligência analítica, arquitetura de dados, consultas SQL e consistência das métricas.
             </p>
@@ -1396,7 +1747,7 @@
           <!-- Casa Madrinha -->
           <div class="p-6 rounded-2xl border border-slate-700 bg-slate-900/80 space-y-2 relative">
             <span class="absolute top-4 right-4 text-[10px] font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700 uppercase">Cross-Training</span>
-            <h4 class="text-2xl font-bold text-white">Prisma</h4>
+            <h4 id="result-mentor-house" class="text-2xl font-bold text-white">Prisma</h4>
             <p class="text-xs text-slate-400 leading-relaxed pt-2">
               Desenvolvimento paralelo em automações digitais, Agentes Virtuais e fluxos interativos.
             </p>
@@ -1509,6 +1860,63 @@
   </script>
 
 <script>
+  // ============================================================
+  // ASTROLÁBIO — DEMO
+  // Troque estes valores pela saída do algoritmo de pontuação
+  // quando as perguntas e regras definitivas estiverem prontas.
+  // ============================================================
+  const ASTROLABIO_DEMO_RESULT = {
+    principal: 'Prumo',
+    madrinha: 'Prisma'
+  };
+
+  const ASTROLABIO_HOUSE_COLORS = {
+    'Alicerce': '#f5a34b',
+    'Prumo': '#8b86ff',
+    'Prisma': '#32cabe',
+    'Vigília': '#fa6682'
+  };
+
+  let astrolabioRevealTimers = [];
+  let astrolabioRevealFinished = false;
+
+  function clearAstrolabioRevealTimers() {
+    astrolabioRevealTimers.forEach(timer => clearTimeout(timer));
+    astrolabioRevealTimers = [];
+  }
+
+  function setQuizProgress(width, text, percent) {
+    const progressBar = document.getElementById('progress-bar');
+    const stepLabel = document.getElementById('step-label');
+    const stepPercentage = document.getElementById('step-percentage');
+    if (progressBar) progressBar.style.width = width;
+    if (stepLabel) stepLabel.innerText = text;
+    if (stepPercentage) stepPercentage.innerText = percent;
+  }
+
+  function syncRevealHouseEmblems() {
+    document.querySelectorAll('#astrolabio-reveal .astro-house-rune').forEach(rune => {
+      const house = rune.dataset.house;
+      const sourceCard = [...document.querySelectorAll('#casas .house-pro')].find(card => {
+        const name = card.querySelector('.house-name');
+        return name && name.textContent.trim() === house;
+      });
+      const sourceImage = sourceCard ? sourceCard.querySelector('.house-emblem') : null;
+      const targetImage = rune.querySelector('img');
+      if (sourceImage && targetImage) {
+        targetImage.src = sourceImage.src;
+        targetImage.alt = `Símbolo da casa ${house}`;
+      }
+    });
+  }
+
+  function applyDemoResultToCards() {
+    const main = document.getElementById('result-main-house');
+    const mentor = document.getElementById('result-mentor-house');
+    if (main) main.textContent = ASTROLABIO_DEMO_RESULT.principal;
+    if (mentor) mentor.textContent = ASTROLABIO_DEMO_RESULT.madrinha;
+  }
+
   // Abre o formulário ao clicar no Astrolábio
   function startAstrolabio() {
     const triggerContainer = document.getElementById('hat-trigger-container');
@@ -1518,13 +1926,23 @@
       triggerContainer.classList.add('hidden');
       quizContainer.classList.remove('hidden');
       goToStep(1);
+      quizContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
   // Volta para a capa com a imagem do Astrolábio
   function resetToHome() {
+    clearAstrolabioRevealTimers();
+    astrolabioRevealFinished = false;
+
     const triggerContainer = document.getElementById('hat-trigger-container');
     const quizContainer = document.getElementById('quiz-container');
+    const reveal = document.getElementById('astrolabio-reveal');
+    const revealStage = document.getElementById('astro-reveal-stage');
+
+    if (reveal) reveal.classList.add('hidden');
+    if (revealStage) revealStage.classList.remove('is-running', 'is-final');
+    document.querySelectorAll('#astrolabio-reveal .astro-house-rune').forEach(r => r.classList.remove('is-scanning', 'is-selected'));
 
     if (triggerContainer && quizContainer) {
       quizContainer.classList.add('hidden');
@@ -1532,42 +1950,147 @@
     }
   }
 
+  function showResultStep() {
+    clearAstrolabioRevealTimers();
+    document.querySelectorAll('.step-block').forEach(el => el.classList.add('hidden'));
+    const reveal = document.getElementById('astrolabio-reveal');
+    const result = document.getElementById('step-3');
+    if (reveal) reveal.classList.add('hidden');
+    if (result) result.classList.remove('hidden');
+    applyDemoResultToCards();
+    setQuizProgress('100%', 'Etapa 4 de 4: Recomendação & PDI', '100%');
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function finishAstrolabioReveal(targetHouse, immediate = false) {
+    if (astrolabioRevealFinished) return;
+    astrolabioRevealFinished = true;
+    clearAstrolabioRevealTimers();
+
+    const stage = document.getElementById('astro-reveal-stage');
+    const kicker = document.getElementById('astro-reveal-kicker');
+    const title = document.getElementById('astro-reveal-title');
+    const subtitle = document.getElementById('astro-reveal-subtitle');
+    const resultName = document.getElementById('astro-reveal-result-name');
+    const skipButton = document.getElementById('astro-skip-button');
+    const color = ASTROLABIO_HOUSE_COLORS[targetHouse] || '#fbbf24';
+
+    document.querySelectorAll('#astrolabio-reveal .astro-house-rune').forEach(rune => {
+      rune.classList.remove('is-scanning', 'is-selected');
+      if (rune.dataset.house === targetHouse) rune.classList.add('is-selected');
+    });
+
+    if (stage) {
+      stage.style.setProperty('--result-color', color);
+      stage.classList.remove('is-running');
+      stage.classList.add('is-final');
+    }
+    if (kicker) kicker.textContent = 'Afinidade encontrada';
+    if (title) title.textContent = 'Sua Casa Principal foi revelada';
+    if (subtitle) subtitle.textContent = 'A recomendação combina os sinais do cenário prático com o repertório informado no Raio-X de Competências.';
+    if (resultName) resultName.textContent = targetHouse;
+    if (skipButton) skipButton.style.visibility = 'hidden';
+
+    const delay = immediate ? 700 : 2800;
+    astrolabioRevealTimers.push(setTimeout(showResultStep, delay));
+  }
+
+  function runAstrolabioReveal(targetHouse) {
+    clearAstrolabioRevealTimers();
+    astrolabioRevealFinished = false;
+    syncRevealHouseEmblems();
+
+    document.querySelectorAll('.step-block').forEach(el => el.classList.add('hidden'));
+    const reveal = document.getElementById('astrolabio-reveal');
+    const stage = document.getElementById('astro-reveal-stage');
+    const kicker = document.getElementById('astro-reveal-kicker');
+    const title = document.getElementById('astro-reveal-title');
+    const subtitle = document.getElementById('astro-reveal-subtitle');
+    const resultName = document.getElementById('astro-reveal-result-name');
+    const skipButton = document.getElementById('astro-skip-button');
+
+    if (!reveal || !stage) {
+      showResultStep();
+      return;
+    }
+
+    reveal.classList.remove('hidden');
+    stage.classList.remove('is-final');
+    stage.classList.add('is-running');
+    stage.style.setProperty('--result-color', ASTROLABIO_HOUSE_COLORS[targetHouse] || '#fbbf24');
+    if (kicker) kicker.textContent = 'Cruzando afinidade & repertório';
+    if (title) title.textContent = 'O Astrolábio está interpretando seus sinais...';
+    if (subtitle) subtitle.textContent = 'Cenários práticos, repertório técnico e afinidade estão sendo combinados para formar a recomendação.';
+    if (resultName) resultName.textContent = '';
+    if (skipButton) skipButton.style.visibility = 'visible';
+
+    document.querySelectorAll('#astrolabio-reveal .astro-house-rune').forEach(r => r.classList.remove('is-scanning', 'is-selected'));
+    setQuizProgress('75%', 'Etapa 3 de 4: Leitura do Astrolábio', '75%');
+
+    const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+      astrolabioRevealTimers.push(setTimeout(() => finishAstrolabioReveal(targetHouse, true), 450));
+      return;
+    }
+
+    const houses = ['Alicerce', 'Prumo', 'Prisma', 'Vigília'];
+    // Ritmo começa rápido e desacelera até a revelação. Não é sorteio:
+    // o resultado já foi calculado antes desta animação visual.
+    const delays = [180,180,190,200,220,240,260,290,320,360,410,470,540,620,720,850];
+    let index = 0;
+
+    const scanNext = () => {
+      if (astrolabioRevealFinished) return;
+      document.querySelectorAll('#astrolabio-reveal .astro-house-rune').forEach(r => r.classList.remove('is-scanning'));
+      const house = houses[index % houses.length];
+      const rune = document.querySelector(`#astrolabio-reveal .astro-house-rune[data-house="${house}"]`);
+      if (rune) rune.classList.add('is-scanning');
+
+      if (index < delays.length - 1) {
+        const delay = delays[index];
+        index += 1;
+        astrolabioRevealTimers.push(setTimeout(scanNext, delay));
+      } else {
+        astrolabioRevealTimers.push(setTimeout(() => finishAstrolabioReveal(targetHouse), 1000));
+      }
+    };
+    scanNext();
+  }
+
   // Transição de etapas com barra de progresso
   function goToStep(stepNumber) {
+    if (stepNumber === 3) {
+      runAstrolabioReveal(ASTROLABIO_DEMO_RESULT.principal);
+      return;
+    }
+
+    clearAstrolabioRevealTimers();
+    const reveal = document.getElementById('astrolabio-reveal');
+    if (reveal) reveal.classList.add('hidden');
     document.querySelectorAll('.step-block').forEach(el => el.classList.add('hidden'));
 
     const currentStep = document.getElementById(`step-${stepNumber}`);
-    if (currentStep) {
-      currentStep.classList.remove('hidden');
-    }
-
-    const progressBar = document.getElementById('progress-bar');
-    const stepLabel = document.getElementById('step-label');
-    const stepPercentage = document.getElementById('step-percentage');
+    if (currentStep) currentStep.classList.remove('hidden');
 
     const stepInfo = {
       1: { width: '25%', text: 'Etapa 1 de 4: Cenários Práticos', percent: '25%' },
-      2: { width: '50%', text: 'Etapa 2 de 4: Raio-X de Competências', percent: '50%' },
-      3: { width: '100%', text: 'Etapa 3 e 4: Recomendação & PDI', percent: '100%' }
+      2: { width: '50%', text: 'Etapa 2 de 4: Raio-X de Competências', percent: '50%' }
     };
 
     if (stepInfo[stepNumber]) {
-      if (progressBar) progressBar.style.width = stepInfo[stepNumber].width;
-      if (stepLabel) stepLabel.innerText = stepInfo[stepNumber].text;
-      if (stepPercentage) stepPercentage.innerText = stepInfo[stepNumber].percent;
+      setQuizProgress(stepInfo[stepNumber].width, stepInfo[stepNumber].text, stepInfo[stepNumber].percent);
     }
 
-    // Recarrega os ícones caso a biblioteca Lucide esteja em uso
-    if (window.lucide) {
-      lucide.createIcons();
-    }
+    if (window.lucide) lucide.createIcons();
   }
 
-  // Garantia do evento de clique ao carregar o DOM
   document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('btn-start-astrolabio');
-    if (btn) {
-      btn.addEventListener('click', startAstrolabio);
+    syncRevealHouseEmblems();
+    applyDemoResultToCards();
+
+    const skip = document.getElementById('astro-skip-button');
+    if (skip) {
+      skip.addEventListener('click', () => finishAstrolabioReveal(ASTROLABIO_DEMO_RESULT.principal, true));
     }
   });
 </script>
