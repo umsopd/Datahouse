@@ -228,6 +228,72 @@
         width: 100%;
       }
     }
+
+    /* Nas páginas de detalhe dos modelos, seções institucionais ficam ocultas */
+    body.report-detail-active #operacoes,
+    body.report-detail-active #astrolabio {
+      display: none !important;
+    }
+
+    /* Astrolábio em maior destaque na página principal */
+    #astrolabio .astrolabio-hero-image {
+      width: clamp(18rem, 34vw, 26rem);
+      height: clamp(18rem, 34vw, 26rem);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Botão flutuante Voltar ao topo */
+    #back-to-top {
+      position: fixed;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 60;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .72rem .9rem;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: .8rem;
+      background: rgba(25,33,45,.94);
+      color: #f8fafc;
+      font-size: .78rem;
+      font-weight: 700;
+      box-shadow: 0 12px 32px rgba(0,0,0,.30);
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity .2s ease, transform .2s ease, visibility .2s ease, border-color .2s ease, color .2s ease;
+    }
+    #back-to-top.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    #back-to-top:hover {
+      color: #fbbf24;
+      border-color: rgba(245,163,75,.65);
+    }
+    #back-to-top svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    @media (max-width: 639px) {
+      #astrolabio .astrolabio-hero-image {
+        width: min(82vw, 20rem);
+        height: min(82vw, 20rem);
+      }
+      #back-to-top {
+        right: .85rem;
+        bottom: .85rem;
+      }
+      #back-to-top .back-to-top-label {
+        display: none;
+      }
+    }
+
 </style>
  </head>
  <body>
@@ -408,7 +474,7 @@
          <li>Governança das definições</li>
          <li>Qualidade e consistência</li>
         </ul>
-        <p class="house-stack"><strong>Especialidades:</strong> modelagem · métricas · qualidade</p>
+        <p class="house-stack"><strong>Especialidades:</strong> Modelagem · Métricas · Qualidade</p>
        </article>
 
        <article class="house-pro" style="--house:#32cabe;">
@@ -428,7 +494,7 @@
          <li>Investigação de causa-raiz</li>
          <li>Modelos preditivos</li>
         </ul>
-        <p class="house-stack"><strong>Stack principal:</strong> Power BI · estudos · ML</p>
+        <p class="house-stack"><strong>Stack principal:</strong> Power BI · Estudos · ML</p>
        </article>
 
        <article class="house-pro" style="--house:#fa6682;">
@@ -448,7 +514,7 @@
          <li>Alertas e incidentes</li>
          <li>SLA em produção</li>
         </ul>
-        <p class="house-stack"><strong>Especialidades:</strong> monitoramento · plantão · alertas</p>
+        <p class="house-stack"><strong>Especialidades:</strong> Monitoramento · Plantão · Alertas</p>
         <div class="vigilia-note"><strong>A Vigília não é destino, é turno.</strong> Ninguém “mora” nela: o plantão funciona em rodízio e todos passam pela sustentação.</div>
        </article>
       </div>
@@ -1186,7 +1252,7 @@
         class="group relative inline-flex flex-col items-center justify-center cursor-pointer focus:outline-none"
       >
         <!-- Container da Imagem sem Fundo/Borda -->
-        <div class="relative w-52 h-52 sm:w-60 sm:h-60 mb-4 flex items-center justify-center">
+        <div class="astrolabio-hero-image relative mb-5 flex items-center justify-center">
           <img 
           src="https://i.ibb.co/xKVK9WMN/astrolabio.jpg" 
             alt="Astrolábio Chapéu Seletor" 
@@ -1381,6 +1447,11 @@
   </div>
 </section>
 
+   <button id="back-to-top" type="button" aria-label="Voltar ao topo" title="Voltar ao topo">
+    <i data-lucide="arrow-up" aria-hidden="true"></i>
+    <span class="back-to-top-label">Voltar ao topo</span>
+   </button>
+
    <footer class="relative z-10 w-full border-t border-white/10 mt-16">
     <div class="mx-auto max-w-7xl px-5 py-7 text-center lg:px-8">
      <p class="canva-text text-sm text-slate-400">The Data House &copy; 2026 — Governança e Padronização de Relatórios</p>
@@ -1398,6 +1469,7 @@
       function showLibrary() {
         detailViews.forEach((view) => view.classList.remove("is-visible"));
         library.classList.add("is-visible");
+        document.body.classList.remove("report-detail-active");
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
@@ -1406,6 +1478,7 @@
         detailViews.forEach((view) => view.classList.remove("is-visible"));
         const target = document.getElementById("detail-" + name);
         if(target) {
+          document.body.classList.add("report-detail-active");
           target.classList.add("is-visible");
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -1420,6 +1493,18 @@
       });
 
       document.getElementById("brand-button").addEventListener("click", showLibrary);
+
+      const backToTop = document.getElementById("back-to-top");
+      if (backToTop) {
+        const updateBackToTop = () => {
+          backToTop.classList.toggle("is-visible", window.scrollY > 420);
+        };
+        window.addEventListener("scroll", updateBackToTop, { passive: true });
+        updateBackToTop();
+        backToTop.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
     });
   </script>
 
