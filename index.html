@@ -1771,8 +1771,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <!-- Casa Principal -->
           <div class="p-6 rounded-2xl border border-amber-500/50 bg-amber-500/10 space-y-2 relative">
-            <span class="absolute top-4 right-4 text-[10px] font-mono px-2.5 py-1 rounded bg-amber-500 text-slate-950 font-bold uppercase">Casa Principal</span>
-            <h4 id="result-main-house" class="text-2xl font-bold text-white">Prumo</h4>
+            <span class="inline-flex w-fit text-[10px] font-mono px-2.5 py-1 rounded bg-amber-500 text-slate-950 font-bold uppercase mb-2">Casa Principal</span>
+            <h4 id="result-main-house" class="text-2xl font-bold text-white leading-tight">Prumo</h4>
             <p class="text-xs text-slate-300 leading-relaxed pt-2">
               Foco em inteligência analítica, arquitetura de dados, consultas SQL e consistência das métricas.
             </p>
@@ -1780,8 +1780,8 @@
 
           <!-- Casa Madrinha -->
           <div class="p-6 rounded-2xl border border-slate-700 bg-slate-900/80 space-y-2 relative">
-            <span class="absolute top-4 right-4 text-[10px] font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700 uppercase">Cross-Training</span>
-            <h4 id="result-mentor-house" class="text-2xl font-bold text-white">Prisma</h4>
+            <span class="inline-flex w-fit text-[10px] font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700 uppercase mb-2">Cross-Training</span>
+            <h4 id="result-mentor-house" class="text-2xl font-bold text-white leading-tight">Prisma</h4>
             <p class="text-xs text-slate-400 leading-relaxed pt-2">
               Desenvolvimento paralelo em automações digitais, Agentes Virtuais e fluxos interativos.
             </p>
@@ -2070,7 +2070,12 @@
     const houses = ['Alicerce', 'Prumo', 'Prisma', 'Vigília'];
     // Ritmo começa rápido e desacelera até a revelação. Não é sorteio:
     // o resultado já foi calculado antes desta animação visual.
-    const delays = [180,180,190,200,220,240,260,290,320,360,410,470,540,620,720,850];
+    const delays = [
+      180,180,190,200,
+      220,240,260,290,
+      320,360,410,470,
+      540,620,720,850
+    ];
     let index = 0;
 
     const scanNext = () => {
