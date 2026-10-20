@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Data House | BI Diretoria — Demonstração</title>
+  <style>
+    :root{
+      --green:#0d8f4f;
+      --green-2:#1ab768;
+      --green-3:#dff6e9;
+      --line:#d7e3db;
+      --ink:#183027;
+      --muted:#60756a;
+      --bg:#f5f8f6;
+      --panel:#ffffff;
+      --shadow:0 12px 32px rgba(24,48,39,.08);
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#f7faf8 0,#eef5f0 100%);color:var(--ink)}
+    header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .wrap{max-width:1320px;margin:auto;padding:18px 24px}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .brandline{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .logo{background:linear-gradient(180deg,#0d8f4f,#076638);color:#fff;padding:11px 16px;border-radius:16px;font-weight:900;font-size:30px;line-height:1;letter-spacing:-.04em;box-shadow:var(--shadow)}
+    .brand small{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.18em;font-weight:800}
+    h1{margin:2px 0 0;font-size:clamp(28px,4vw,54px);line-height:1.05}
+    .subtitle{margin-top:4px;color:var(--muted)}
+    .badges{display:flex;gap:12px;flex-wrap:wrap}
+    .badge{display:flex;align-items:center;gap:10px;border:1px solid #b8cfbf;background:#fff;padding:9px 14px;border-radius:999px;font-size:13px;font-weight:700;color:#2f5140}
+    .badge i{display:grid;place-items:center;width:22px;height:22px;border:2px solid var(--green);border-radius:50%;color:var(--green);font-style:normal;font-size:12px}
+    .toolbar{display:flex;justify-content:space-between;align-items:end;gap:14px;flex-wrap:wrap;margin:22px auto}
+    .filters,.actions{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+    label{display:grid;gap:6px;font-size:12px;color:var(--muted);font-weight:700}
+    select,button,.btn{border:1px solid #c7d6cd;background:#fff;border-radius:10px;padding:11px 12px;color:var(--ink);font-weight:700}
+    button,.btn{cursor:pointer}
+    .btn.primary,button.active{background:linear-gradient(180deg,var(--green-2),var(--green));border-color:var(--green);color:#fff}
+    .tabs{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px}
+    .tabs button{white-space:nowrap;min-width:max-content}
+    .shell{display:grid;grid-template-columns:250px minmax(0,1fr);gap:18px;align-items:start}
+    .sidebar,.contentCard,.card,.kpi{background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:18px}
+    .sidebar{padding:16px;position:sticky;top:130px}
+    .sidebrand{background:linear-gradient(180deg,#0d8f4f,#076638);color:#fff;border-radius:16px;padding:18px;text-align:center;font-weight:900;font-size:42px;line-height:1;letter-spacing:-.05em;margin-bottom:14px}
+    .sidebtn{display:flex;width:100%;align-items:center;gap:10px;border:none;background:#0d6f40;color:#fff;padding:12px 14px;border-radius:12px;margin-bottom:10px;text-align:left;font-weight:800}
+    .sidebtn.active{background:linear-gradient(180deg,#28c978,#0d8f4f)}
+    .sidebtn span.num{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#fff;color:#0d8f4f;font-size:12px}
+    .contentCard{padding:20px}
+    .sectionHead{display:flex;justify-content:space-between;align-items:start;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+    .sectionTitle{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .numdot{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;font-weight:900}
+    h2{margin:0;font-size:32px;color:#0d6f40}
+    .sectionDesc{color:var(--muted);font-size:14px}
+    .panelGrid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .panelGrid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .split{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-top:14px}
+    .split2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+    .kpi{padding:14px 16px;min-height:98px}
+    .kpi small{display:block;color:var(--muted);font-weight:700}
+    .kpi strong{display:block;font-size:32px;color:#0d6f40;margin:6px 0 2px}
+    .kpi em{font-style:normal;color:#779284;font-size:12px}
+    .card{padding:16px}
+    .card h3{margin:0 0 14px;font-size:16px;color:#0d6f40}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{padding:10px 8px;border-bottom:1px solid #e7efea;text-align:left}
+    th{color:#5d7769;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+    .muted{color:var(--muted)}
+    .linechart{height:250px;display:flex;align-items:flex-end;gap:10px;padding:18px 10px 6px;border-bottom:1px solid #edf3ef}
+    .lineCol{flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:8px;height:100%}
+    .lineStack{position:relative;width:100%;max-width:58px;height:180px}
+    .s1,.s2,.s3,.s4{position:absolute;left:0;right:0;bottom:0;border-radius:8px 8px 0 0}
+    .s1{background:#d6efe1}.s2{background:#aadfbe}.s3{background:#58c685}.s4{background:#0d8f4f}
+    .funnelWrap{padding:8px 0 0}
+    .fstep{margin:10px auto;border-radius:10px;padding:13px 12px;background:linear-gradient(90deg,#ccefdc,#66ca90);text-align:center;color:#0f5130;font-weight:900}
+    .gauges{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .gauge{display:grid;place-items:center;text-align:center}
+    .ring{width:104px;height:104px;border-radius:50%;background:conic-gradient(var(--green) calc(var(--p)*1%), #dce6df 0);display:grid;place-items:center}
+    .ring::after{content:"";width:74px;height:74px;background:#fff;border-radius:50%;display:block}
+    .ringVal{position:absolute;font-size:22px;font-weight:900;color:#0d6f40}
+    .ringWrap{position:relative;display:grid;place-items:center;margin-bottom:8px}
+    .meter{height:12px;background:#e3ece6;border-radius:999px;overflow:hidden}.meter > div{height:100%;background:linear-gradient(90deg,#2cc36e,#0d8f4f)}
+    .legendRow{display:flex;gap:8px;align-items:center;margin:6px 0;color:#587164;font-size:12px}
+    .sw{width:10px;height:10px;border-radius:99px;display:inline-block}
+    .donut{width:150px;height:150px;border-radius:50%;background:conic-gradient(#0d8f4f 0 78.5%,#47bb79 78.5% 91%,#94d9af 91% 98%,#dcefe5 98% 100%);margin:10px auto;position:relative}
+    .donut:after{content:"";position:absolute;inset:28px;background:#fff;border-radius:50%}
+    .donutLabel{position:relative;z-index:1;text-align:center;margin-top:-98px;font-size:26px;color:#0d6f40;font-weight:900}
+    .footnote{padding:14px 16px;border-left:4px solid var(--green);background:#eef8f1;border-radius:12px;color:#426353;font-size:13px;margin-top:18px}
+    .hidden{display:none}
+    .pillok,.pillwarn{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:800}
+    .pillok{background:#e2f5ea;color:#0d6f40}.pillwarn{background:#fff4d8;color:#8a5b00}
+    @media(max-width:1080px){.shell{grid-template-columns:1fr}.sidebar{position:static}.panelGrid4{grid-template-columns:repeat(2,1fr)}.gauges{grid-template-columns:repeat(2,1fr)}.split,.split2,.panelGrid3{grid-template-columns:1fr}}
+    @media(max-width:640px){.wrap{padding:14px}.panelGrid4{grid-template-columns:1fr 1fr}.kpi strong{font-size:24px}h2{font-size:24px}.logo{font-size:24px}.sidebrand{font-size:34px}.gauges{grid-template-columns:1fr 1fr}}
+  
+/* Tema unificado com The Data House */
+:root{--green:#e9b750;--green-2:#ffd17e;--green-3:#3c3442;--line:#324158;--ink:#eef3fb;--muted:#a9b7ca;--bg:#081020;--panel:#111e32;--shadow:0 15px 30px rgba(0,0,0,.22)}
+body{color:#e9eef7;background:radial-gradient(circle at 80% 0,#1b3652,transparent 38%),#081020}
+header{background:rgba(9,22,40,.95);border-color:#324158}
+.logo,.sidebrand{background:linear-gradient(135deg,#f1c46e,#a98240)!important;color:#152036}
+.badge{background:#182a3f;border-color:#3b5268;color:#e9eef7}.badge i{border-color:#f1c46e;color:#f1c46e}
+select,button,.btn{background:#172840;color:#e5eef9;border-color:#3b506a}
+.btn.primary,button.active,.sidebtn.active{background:linear-gradient(135deg,#f1c46e,#c59742)!important;border-color:#e1b358!important;color:#172236!important}
+.sidebar,.contentCard,.card,.kpi{background:#101e32;border-color:#33445c;color:#e9eef7}
+.sidebtn{background:#1b3046;color:#e9eef7;border:1px solid #33455c}
+.sidebtn span.num,.numdot{background:#e9b750;color:#172236}
+h2,.card h3,.kpi strong,.ringVal,.donutLabel{color:#f2c46e}
+th,td{border-color:#2e4259}th{color:#aebed0}
+.kpi em,.kpi small,.muted,.sectionDesc{color:#aabacf}
+.s1{background:#304966}.s2{background:#497a89}.s3{background:#76bcad}.s4{background:#e9b750}
+.fstep{background:linear-gradient(90deg,#2a536a,#b79550);color:#fff}.fstep .muted{color:#fff}
+.ring{background:conic-gradient(#e9b750 calc(var(--p)*1%),#34445a 0)}.ring::after{background:#111e32}
+.meter{background:#34455e}.meter>div{background:linear-gradient(90deg,#278eaa,#e9b750)}
+.donut{background:conic-gradient(#e9b750 0 78.5%,#73b4aa 78.5% 91%,#55758c 91% 98%,#34455e 98% 100%)}.donut:after{background:#111e32}
+.footnote{background:#192a3f;color:#bdcee2;border-left-color:#e9b750}
+.pillok{background:#203f40;color:#93e1c6}.pillwarn{background:#4a392a;color:#f7d488}
+.linechart{border-color:#33445c}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap top">
+      <div class="brandline">
+        <div class="logo">✦</div>
+        <div class="brand">
+          <h1>BI DIRETORIA • THE DATA HOUSE</h1>
+          <div class="subtitle">Estrutura Padrão de Relatórios Operacionais · Modelo de Diretoria com dados fictícios</div>
+        </div>
+      </div>
+      <div class="badges">
+        <div class="badge"><i>✓</i> Padronização <span class="muted">visual e de indicadores</span></div>
+        <div class="badge"><i>✓</i> Inteligência <span class="muted">para gestão de performance</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="toolbar">
+      <div class="filters">
+        <label>Período
+          <select id="periodo">
+            <option value="jun">01/06/2026 a 08/06/2026</option>
+            <option value="mai">01/05/2026 a 08/05/2026</option>
+            <option value="abr">01/04/2026 a 08/04/2026</option>
+          </select>
+        </label>
+        <label>Comparativo
+          <select id="comparativo">
+            <option value="diaanterior">Dia anterior</option>
+            <option value="mesanterior">Mês anterior</option>
+            <option value="media">Média histórica</option>
+          </select>
+        </label>
+        <label>Supervisão
+          <select id="supervisao">
+            <option value="todos">Todos</option>
+            <option value="norte">Supervisão Norte</option>
+            <option value="sul">Supervisão Sul</option>
+            <option value="leste">Supervisão Leste</option>
+          </select>
+        </label>
+      </div>
+      <div class="actions">
+        <button id="reset">Limpar filtros</button>
+        <button class="btn primary" id="download">↓ Baixar base fictícia (CSV)</button>
+      </div>
+    </div>
+
+    <div class="tabs" id="tabs"></div>
+
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="sidebrand" style="font-size:22px;letter-spacing:.15em">✦ DATA HOUSE</div>
+        <div id="sidenav"></div>
+      </aside>
+
+      <section class="contentCard">
+        <div id="view"></div>
+      </section>
+    </div>
+  </main>
+
+<script>
+const pages=[
+  {id:'executivo',num:1,title:'VISÃO EXECUTIVA',desc:'Acompanhamento estratégico da operação'},
+  {id:'operacao',num:2,title:'OPERAÇÃO',desc:'Acompanhamento operacional diário'},
+  {id:'equipes',num:3,title:'EQUIPES',desc:'Desempenho por supervisão e equipe'},
+  {id:'operadores',num:4,title:'OPERADORES',desc:'Performance individual'},
+  {id:'qualidade',num:5,title:'QUALIDADE',desc:'Monitoria e eficiência'},
+  {id:'glossario',num:6,title:'GLOSSÁRIO',desc:'Definições dos indicadores'}
+];
+let page='executivo';
+const $=id=>document.getElementById(id);
+const num=n=>Math.round(n).toLocaleString('pt-BR');
+const pct=(a,b)=>b?((a/b)*100).toFixed(2).replace('.',',')+'%':'0,00%';
+const money=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+const sec=t=>Math.floor(t/60).toString().padStart(2,'0')+':'+(t%60).toString().padStart(2,'0');
+const base={
+  abr:{range:'01/04/2026 a 08/04/2026',mailing:101482,tentativas:337210,alo:17640,cpc:3980,promessas:3142,acordos:2390,pagamentos:926,recuperacao:1134200,meta:2600,avaliacoes:1180,nota:91.7,ncs:286},
+  mai:{range:'01/05/2026 a 08/05/2026',mailing:108945,tentativas:359860,alo:18580,cpc:4245,promessas:3396,acordos:2518,pagamentos:987,recuperacao:1199380,meta:2750,avaliacoes:1226,nota:92.1,ncs:297},
+  jun:{range:'01/06/2026 a 08/06/2026',mailing:112629,tentativas:384974,alo:19190,cpc:4490,promessas:3569,acordos:2657,pagamentos:1049,recuperacao:1248390,meta:2900,avaliacoes:1248,nota:92.4,ncs:312}
+};
+const supervisors={todos:1,norte:.36,sul:.34,leste:.30};
+const teamShares=[.162,.141,.131,.116,.095,.087,.082,.071,.065,.050];
+const operatorNames=['Leonardo C. dos Anjos','Gabriel P. Mostarschner','Lisandra F. Wolf','Jorge A. Neves','Andre L. Masteck','Vanessa L. Rodrigues','Nicolle P. Rodrigues','Shayla G. K. Godoi'];
+
+function getData(){
+  const src={...base[$('periodo').value]};
+  const fac=supervisors[$('supervisao').value]??1;
+  const fields=['mailing','tentativas','alo','cpc','promessas','acordos','pagamentos','recuperacao','meta','avaliacoes','ncs'];
+  fields.forEach(k=>src[k]=Math.round(src[k]*fac));
+  src.nota=base[$('periodo').value].nota-( $('supervisao').value==='norte'?0.1:$('supervisao').value==='sul'?0.3:$('supervisao').value==='leste'?0.5:0 );
+  return src;
+}
+function compareText(d){
+  const key=$('comparativo').value;
+  const baseMap={diaanterior:['vs dia anterior',2.6],mesanterior:['vs mês anterior',5.1],media:['vs média histórica',8.4]};
+  return {label:baseMap[key][0],delta:baseMap[key][1]};
+}
+function kpi(label,value,sub='Indicador demonstrativo'){return `<div class="kpi"><small>${label}</small><strong>${value}</strong><em>${sub}</em></div>`}
+function table(headers,rows){return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`}
+function sectionHead(p){return `<div class="sectionHead"><div><div class="sectionTitle"><div class="numdot">${p.num}</div><h2>${p.title}</h2></div><div class="sectionDesc">${p.desc}</div></div><div class="sectionDesc">Período selecionado: ${getData().range}</div></div>`}
+
+function lineBars(values,labels){
+  const max=Math.max(...values.map(v=>v.tentativas));
+  return `<div class="linechart">${values.map((v,i)=>{
+    const h1=Math.max(8,Math.round(v.tentativas/max*160));
+    const h2=Math.max(8,Math.round(v.alo/max*160));
+    const h3=Math.max(8,Math.round(v.cpc/max*160));
+    const h4=Math.max(8,Math.round(v.acordos/max*160));
+    return `<div class="lineCol"><div class="lineStack"><div class="s1" style="height:${h1}px"></div><div class="s2" style="height:${h2}px"></div><div class="s3" style="height:${h3}px"></div><div class="s4" style="height:${h4}px"></div></div><div class="muted" style="font-size:11px">${labels[i]}</div></div>`;
+  }).join('')}</div>
+    <div class="legendRow"><span class="sw" style="background:#d6efe1"></span>Tentativas <span class="sw" style="background:#aadfbe"></span>Alô <span class="sw" style="background:#58c685"></span>CPC <span class="sw" style="background:#0d8f4f"></span>Acordos</div>`;
+}
+
+function viewExecutivo(){
+  const d=getData(), cmp=compareText(d);
+  const days=['05/06','06/06','07/06','08/06','09/06','10/06','11/06'];
+  const acordos=[180,210,245,230,260,310,275].map(v=>Math.round(v*supervisors[$('supervisao').value]));
+  const points=days.map((x,i)=>`<tr><td>${x}</td><td>${num(acordos[i])}</td></tr>`).join('');
+  return `${sectionHead(pages[0])}
+    <div class="panelGrid4">
+      ${kpi('Mailing',num(d.mailing),cmp.label)}
+      ${kpi('Tentativas',num(d.tentativas),'Volume total do período')}
+      ${kpi('Alô',num(d.alo),pct(d.alo,d.tentativas)+' sobre tentativas')}
+      ${kpi('CPC',num(d.cpc),pct(d.cpc,d.alo)+' sobre alôs')}
+      ${kpi('Promessas',num(d.promessas))}
+      ${kpi('Acordos',num(d.acordos),pct(d.acordos,d.cpc)+' conversão CPC > Acordo')}
+      ${kpi('Pagamentos',num(d.pagamentos),pct(d.pagamentos,d.acordos)+' acordo > pagamento')}
+      ${kpi('Recuperação (R$)',money(d.recuperacao), '+'+cmp.delta.toString().replace('.',',')+'% '+cmp.label)}
+    </div>
+    <div class="split">
+      <div class="card"><h3>Evolução Diária · Acordos</h3>
+        ${table(['Data','Acordos'],days.map((dt,i)=>[dt,num(acordos[i])]))}
+      </div>
+      <div class="card"><h3>Funil de Cobrança</h3>
+        <div class="funnelWrap">
+          <div class="fstep" style="width:96%">Mailing <span class="muted">${num(d.mailing)}</span></div>
+          <div class="fstep" style="width:84%">Tentativas <span class="muted">${num(d.tentativas)}</span></div>
+          <div class="fstep" style="width:70%">Alô <span class="muted">${num(d.alo)}</span></div>
+          <div class="fstep" style="width:56%">CPC <span class="muted">${num(d.cpc)}</span></div>
+          <div class="fstep" style="width:42%">Acordos <span class="muted">${num(d.acordos)}</span></div>
+          <div class="fstep" style="width:28%">Pagamentos <span class="muted">${num(d.pagamentos)}</span></div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function viewOperacao(){
+  const d=getData();
+  const hours=['09h','10h','11h','12h','13h','14h','15h','16h','17h','18h'];
+  const vals=hours.map((h,i)=>({tentativas:[1200,2600,4500,5800,7000,8600,8300,8200,7200,5100][i]*supervisors[$('supervisao').value],alo:[520,1080,1610,2210,2840,3560,3490,3400,2780,1980][i]*supervisors[$('supervisao').value],cpc:[130,380,710,980,1310,1710,1660,1640,1290,860][i]*supervisors[$('supervisao').value],acordos:[78,160,240,310,390,510,500,490,382,291][i]*supervisors[$('supervisao').value]}));
+  const taxaHit=(d.alo/d.tentativas)*100, taxaCpc=(d.cpc/d.alo)*100, taxaConv=(d.acordos/d.cpc)*100, taxaPg=(d.pagamentos/d.acordos)*100;
+  return `${sectionHead(pages[1])}
+    <div class="split">
+      <div class="card"><h3>Evolução por Hora</h3>${lineBars(vals,hours)}</div>
+      <div class="card"><h3>Resumo do Dia</h3>
+        ${table(['Indicador','Resultado'],[['Tentativas',num(d.tentativas)],['Alô',num(d.alo)],['CPC',num(d.cpc)],['Acordos',num(d.acordos)],['Pagamentos',num(d.pagamentos)],['Hit Rate',pct(d.alo,d.tentativas)],['Conversão CPC > Acordo',pct(d.acordos,d.cpc)]])}
+      </div>
+    </div>
+    <div class="split2">
+      <div class="card"><h3>Taxas de Conversão</h3>
+        <div class="gauges">
+          ${[['Hit Rate',taxaHit,'Alô / Tentativas'],['Taxa de CPC',taxaCpc,'CPC / Alô'],['CPC > Acordo',taxaConv,'Acordos / CPC'],['Acordo > Pagto',taxaPg,'Pagamentos / Acordos']].map(([n,v,s])=>`<div class="gauge"><div class="ringWrap"><div class="ring" style="--p:${Math.min(100,Math.max(0,v))}"></div><div class="ringVal">${v.toFixed(1).replace('.',',')}%</div></div><strong>${n}</strong><div class="muted" style="font-size:12px">${s}</div></div>`).join('')}
+        </div>
+      </div>
+      <div class="card"><h3>Meta x Realizado (Acordos)</h3>
+        <div style="margin:10px 0 18px">Meta <strong style="float:right">${num(d.meta)}</strong><div class="meter"><div style="width:100%"></div></div></div>
+        <div style="margin:10px 0 18px">Realizado <strong style="float:right">${num(d.acordos)}</strong><div class="meter"><div style="width:${Math.min(100,d.acordos/d.meta*100)}%"></div></div></div>
+        <div style="margin-top:16px;font-size:15px"><strong>% Atingimento</strong> <span style="float:right;color:#0d6f40;font-size:22px;font-weight:900">${pct(d.acordos,d.meta)}</span></div>
+      </div>
+    </div>`;
+}
+
+function viewEquipes(){
+  const d=getData();
+  let total=0,totalAlo=0,totalCpc=0,totalAc=0,totalPg=0;
+  const rows=[];
+  for(let i=0;i<5;i++){
+    const share=teamShares[i];
+    const tent=Math.round(d.tentativas*share), alo=Math.round(d.alo*share*(.98+i*.01)), cpc=Math.round(d.cpc*share*(.96+i*.02)), ac=Math.round(d.acordos*share*(.98+i*.015)), pg=Math.round(d.pagamentos*share*(.97+i*.01));
+    total+=tent; totalAlo+=alo; totalCpc+=cpc; totalAc+=ac; totalPg+=pg;
+    const meta=Math.round(d.meta*share);
+    rows.push([
+      'Supervisor '+String(i+1).padStart(2,'0'),
+      'Equipe '+String(i+1).padStart(2,'0'),
+      num(tent),num(alo),num(cpc),num(ac),num(pg),pct(alo,tent),pct(ac,cpc),pct(ac,meta), '<span class="pillok">●</span>'
+    ]);
+  }
+  rows.push(['<strong>Total</strong>','<strong>5</strong>',`<strong>${num(total)}</strong>`,`<strong>${num(totalAlo)}</strong>`,`<strong>${num(totalCpc)}</strong>`,`<strong>${num(totalAc)}</strong>`,`<strong>${num(totalPg)}</strong>`,`<strong>${pct(totalAlo,total)}</strong>`,`<strong>${pct(totalAc,totalCpc)}</strong>`,`<strong>${pct(totalAc,d.meta)}</strong>`,`<span class="pillok">●</span>`]);
+  return `${sectionHead(pages[2])}
+    <div class="card">${table(['Supervisor','Equipe','Tentativas','Alô','CPC','Acordos','Pagamentos','Hit Rate','CPC > Acordo','Atingimento Meta','Status'],rows)}</div>
+    <div class="split2">
+      <div class="card"><h3>Acordos por Equipe (Top 5)</h3>${table(['Equipe','Acordos'],Array.from({length:5},(_,i)=>['Equipe '+String(i+1).padStart(2,'0'),num(Math.round(d.acordos*teamShares[i]))]))}</div>
+      <div class="card"><h3>Hit Rate por Equipe (Top 5)</h3>${table(['Equipe','Hit Rate'],Array.from({length:5},(_,i)=>['Equipe '+String(i+1).padStart(2,'0'),pct(Math.round(d.alo*teamShares[i]),Math.round(d.tentativas*teamShares[i]))]))}</div>
+    </div>`;
+}
+
+function viewOperadores(){
+  const d=getData();
+  const rows=operatorNames.map((n,i)=>{
+    const share=[.083,.081,.072,.060,.061,.085,.050,.058][i];
+    const tent=Math.round(d.tentativas*share), alo=Math.round(d.alo*share*(.93+i*.01)), cpc=Math.round(d.cpc*share*(.90+i*.015)), ac=Math.round(d.acordos*share*(.89+i*.012)), pg=Math.round(d.pagamentos*share*(.87+i*.011));
+    const tma=135+i*7, prod=1040+i*34, ader=92+(i%3);
+    return [String(i+1),n,num(tent),num(alo),num(cpc),num(ac),num(pg),pct(alo,tent),pct(ac,cpc),`00:${String(Math.floor(tma/60)).padStart(2,'0')}:${String(tma%60).padStart(2,'0')}`,`00:${String(Math.floor(prod/60)).padStart(2,'0')}:${String(prod%60).padStart(2,'0')}`,ader+'%'];
+  });
+  rows.push(['','<strong>Total</strong>',`<strong>${num(d.tentativas)}</strong>`,`<strong>${num(d.alo)}</strong>`,`<strong>${num(d.cpc)}</strong>`,`<strong>${num(d.acordos)}</strong>`,`<strong>${num(d.pagamentos)}</strong>`,`<strong>${pct(d.alo,d.tentativas)}</strong>`,`<strong>${pct(d.acordos,d.cpc)}</strong>`,`<strong>00:02:39</strong>`,`<strong>00:17:21</strong>`,`<strong>92%</strong>`]);
+  return `${sectionHead(pages[3])}
+    <div class="card">${table(['#','Operador','Tentativas','Alô','CPC','Acordos','Pagamentos','Hit Rate','Conversão CPC > Acordo','TMA','Produtividade','Aderência'],rows)}</div>`;
+}
+
+function viewQualidade(){
+  const d=getData();
+  const notas=[['90 a 100%',78.5],['80 a 89%',15.2],['70 a 79%',4.8],['0 a 69%',1.5]];
+  const nc=[['Abordagem inadequada',28.5],['Não seguir o script',21.4],['Informação incorreta',18.6],['Tratamento inadequado',17.3],['Registro incompleto',16.9]];
+  return `${sectionHead(pages[4])}
+    <div class="split">
+      <div class="card"><h3>Indicadores de Qualidade</h3>
+        <div class="panelGrid3">
+          ${kpi('Avaliações Realizadas',num(d.avaliacoes))}
+          ${kpi('Nota Média',d.nota.toFixed(1).replace('.',',')+'%','★★★★★')}
+          ${kpi('NCs Identificadas',num(d.ncs))}
+        </div>
+      </div>
+      <div class="card"><h3>Distribuição das Notas</h3>
+        <div class="donut"></div><div class="donutLabel">${d.nota.toFixed(1).replace('.',',')}%</div>
+        ${notas.map(([n,v],i)=>`<div class="legendRow"><span class="sw" style="background:${['#0d8f4f','#47bb79','#94d9af','#dcefe5'][i]}"></span>${n}<span style="margin-left:auto">${v.toString().replace('.',',')}%</span></div>`).join('')}
+      </div>
+    </div>
+    <div class="split2">
+      <div class="card"><h3>Taxa de Qualidade</h3><div style="font-size:46px;font-weight:900;color:#0d8f4f">${d.nota.toFixed(1).replace('.',',')}%</div><div class="meter"><div style="width:${d.nota}%"></div></div></div>
+      <div class="card"><h3>Motivos de Não Conformidade (Top 5)</h3>${table(['Motivo','Participação'],nc.map(([n,v])=>[n,v.toString().replace('.',',')+'%']))}</div>
+    </div>`;
+}
+
+function viewGlossario(){
+  const items=[
+    ['Mailing','Total de registros disponíveis para cobrança / prospecção na base.'],
+    ['Tentativas','Total de ligações realizadas para os números da base.'],
+    ['Alô','Total de ligações em que houve atendimento pelo cliente.'],
+    ['Hit Rate','Alô / Tentativas. Percentual de contatos efetivos.'],
+    ['CPC (Contato com Pessoa Certa)','Total de contatos com a pessoa correta para negociação.'],
+    ['Taxa de CPC','CPC / Alô. Percentual de contatos efetivos que são com a pessoa correta.'],
+    ['Acordos','Total de acordos realizados.'],
+    ['Conversão CPC > Acordo','Acordos / CPC. Percentual de acordos sobre os contatos com a pessoa correta.'],
+    ['Pagamentos','Total de acordos pagos.'],
+    ['Conversão Acordo > Pagamento','Pagamentos / Acordos. Percentual de acordos que foram pagos.'],
+    ['Recuperação (R$)','Valor total recuperado em pagamentos.'],
+    ['TMA','Tempo médio de atendimento por operador.'],
+    ['Aderência','Percentual de aderência à jornada / escala prevista.']
+  ];
+  return `${sectionHead(pages[5])}
+    <div class="card">${table(['Indicador','Conceito'],items)}</div>
+    <div class="footnote">Glossário padrão demonstrativo. As definições podem ser ajustadas conforme regras de negócio da operação real. Todos os números desta versão são fictícios e servem apenas para apresentação do modelo.</div>`;
+}
+
+function renderNav(){
+  $('tabs').innerHTML=pages.map(p=>`<button class="${p.id===page?'active':''}" onclick="page='${p.id}';render()">${p.num} ${p.title}</button>`).join('');
+  $('sidenav').innerHTML=pages.map(p=>`<button class="sidebtn ${p.id===page?'active':''}" onclick="page='${p.id}';render()"><span class="num">${p.num}</span><span>${p.title.split(' ')[0]}${p.title.includes(' ')?' '+p.title.split(' ').slice(1).join(' '):''}</span></button>`).join('');
+}
+function render(){
+  renderNav();
+  const map={executivo:viewExecutivo,operacao:viewOperacao,equipes:viewEquipes,operadores:viewOperadores,qualidade:viewQualidade,glossario:viewGlossario};
+  $('view').innerHTML=map[page]();
+}
+$('periodo').addEventListener('change',render);
+$('comparativo').addEventListener('change',render);
+$('supervisao').addEventListener('change',render);
+$('reset').addEventListener('click',()=>{$('periodo').value='jun';$('comparativo').value='diaanterior';$('supervisao').value='todos';render();});
+$('download').addEventListener('click',()=>{
+  const periods=Object.values(base), sups=['Norte','Sul','Leste'];
+  let rows=['periodo;supervisao;mailing;tentativas;alo;cpc;promessas;acordos;pagamentos;recuperacao;meta;avaliacoes;nota;ncs'];
+  periods.forEach((p,idx)=>{
+    sups.forEach((s,i)=>{
+      const fac=[.36,.34,.30][i];
+      rows.push([p.range,s,Math.round(p.mailing*fac),Math.round(p.tentativas*fac),Math.round(p.alo*fac),Math.round(p.cpc*fac),Math.round(p.promessas*fac),Math.round(p.acordos*fac),Math.round(p.pagamentos*fac),Math.round(p.recuperacao*fac),Math.round(p.meta*fac),Math.round(p.avaliacoes*fac),(p.nota-(i*.2)).toFixed(1).replace('.',','),Math.round(p.ncs*fac)].join(';'));
+    })
+  });
+  const blob=new Blob(['\ufeff'+rows.join('\r\n')],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob); const a=document.createElement('a');
+  a.href=url; a.download='datahouse_bi_diretoria_base_ficticia.csv'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
+});
+render();
+</script>
+</body>
+</html>
