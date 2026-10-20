@@ -942,7 +942,31 @@
     }
   </style>
 
- </head>
+ <style id="dh-models-style">
+.dh-cta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0 14px}
+.dh-btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;border-radius:12px;padding:12px 17px;min-height:44px;font-weight:750;font-size:14px;text-decoration:none;cursor:pointer;transition:transform .2s,filter .2s}
+.dh-btn:hover{transform:translateY(-2px);filter:brightness(1.10)}
+.dh-primary{background:#e9b750;border:1px solid #e9b750;color:#101a29}
+.dh-secondary{background:#15243a;border:1px solid #51627d;color:#eaf1fa}
+.dh-disclaimer{flex-basis:100%;font-size:12px;color:#aabacf}
+#dh-demo-overlay{position:fixed;inset:0;display:none;z-index:99999;background:#081020;color:#edf2fa;flex-direction:column}
+#dh-demo-overlay.is-open{display:flex}
+.dh-demo-bar{display:flex;justify-content:space-between;align-items:center;gap:15px;min-height:61px;padding:10px 18px;background:#0e1b2e;border-bottom:1px solid #304159;flex-wrap:wrap}
+.dh-demo-label{font-size:13px;color:#e9b750;font-weight:800;letter-spacing:.04em}
+.dh-demo-bar button{background:#172b43;border:1px solid #4b5f7c;color:#f3f6fd;padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:700}
+#dh-demo-frame{width:100%;flex:1;border:none;background:#081020}
+body.dh-demo-active{overflow:hidden}
+@media(max-width:560px){.dh-cta>.dh-btn{width:100%}.dh-demo-label{font-size:11px}}
+</style><style id="dh-excel-download-styles">
+.dh-excel-downloads{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0 26px}
+.dh-excel-download{display:flex;align-items:center;gap:12px;min-height:80px;padding:16px;border-radius:14px;border:1px solid rgba(251,113,133,.32);background:rgba(30,41,59,.88);color:#f8fafc;text-decoration:none;transition:transform .2s,border-color .2s,background .2s}
+.dh-excel-download:hover,.dh-excel-download:focus-visible{transform:translateY(-2px);border-color:#fda4af;background:#263348;outline-offset:3px}
+.dh-excel-download>span:nth-child(2){flex:1;min-width:0}.dh-excel-download strong,.dh-excel-download small{display:block}
+.dh-excel-download strong{font-weight:750;font-size:15px}.dh-excel-download small{font-size:12px;color:#aab5c6;margin-top:4px}
+.dh-excel-download>span:last-child{font-size:23px;color:#fda4af}.dh-excel-symbol{font-size:24px;color:#fda4af}
+@media(max-width:760px){.dh-excel-downloads{grid-template-columns:1fr}}
+</style>
+</head>
  <body>
   <div class="portal-shell relative">
    <div class="star-field pointer-events-none absolute inset-0"></div>
@@ -1193,6 +1217,11 @@
     <!-- DETALHE CLIENTE -->
     <section id="detail-cliente" class="portal-view detail-view mx-auto max-w-7xl px-5 py-10 lg:px-8 lg:py-14">
      <button type="button" data-back class="focus-ring mb-8 inline-flex items-center gap-2 rounded-lg text-sm font-bold text-amber-300 hover:text-amber-200"><i data-lucide="arrow-left" class="h-4 w-4" aria-hidden="true"></i><span>Voltar ao Menu Principal</span></button>
+<div class="dh-cta" aria-label="Demonstração de relatório">
+<button type="button" data-demo="cliente" class="dh-btn dh-primary"><span aria-hidden="true">◉</span> Navegar pelo BI</button>
+<a class="dh-btn dh-secondary" download href="datahouse_cliente_base_ficticia.csv"><span aria-hidden="true">↓</span> Baixar base fictícia (CSV)</a>
+<span class="dh-disclaimer">Demonstração com dados fictícios. Nenhum arquivo Power BI original é distribuído.</span>
+</div>
      <p class="canva-text text-xs font-bold uppercase tracking-[.22em] text-amber-400">Modelo 01 · Visão externa</p>
      <h1 class="canva-text display-font mt-3 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl">BI Personalizado para o Cliente</h1>
      <p class="canva-text mt-5 max-w-3xl text-lg leading-relaxed text-slate-300">Este padrão destina-se ao envio externo ou aos portais de acompanhamento contratual dos clientes. Apresenta indicadores de entrega limpos e sem expor detalhes internos operacionais.</p>
@@ -1301,6 +1330,11 @@
     <!-- DETALHE INTERNO -->
     <section id="detail-interno" class="portal-view detail-view mx-auto max-w-7xl px-5 py-10 lg:px-8 lg:py-14">
      <button type="button" data-back class="focus-ring mb-8 inline-flex items-center gap-2 rounded-lg text-sm font-bold text-violet-300 hover:text-violet-200"><i data-lucide="arrow-left" class="h-4 w-4" aria-hidden="true"></i><span>Voltar ao Menu Principal</span></button>
+<div class="dh-cta" aria-label="Demonstração de relatório">
+<button type="button" data-demo="interno" class="dh-btn dh-primary"><span aria-hidden="true">◉</span> Navegar pelo BI</button>
+<a class="dh-btn dh-secondary" download href="datahouse_interno_base_ficticia.csv"><span aria-hidden="true">↓</span> Baixar base fictícia (CSV)</a>
+<span class="dh-disclaimer">Demonstração com dados fictícios. Nenhum arquivo Power BI original é distribuído.</span>
+</div>
      <p class="canva-text text-xs font-bold uppercase tracking-[.22em] text-violet-400">Modelo 02 — Operação</p>
      <h1 class="canva-text display-font mt-3 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl">BI Padrão Operacional Interno</h1>
      <p class="canva-text mt-5 max-w-3xl text-lg leading-relaxed text-slate-300">O painel de rotina que mantém a operação alinhada, comparável e pronta para agir.
@@ -1422,6 +1456,11 @@
     <!-- DETALHE DIRETORIA -->
     <section id="detail-diretoria" class="portal-view detail-view mx-auto max-w-7xl px-5 py-10 lg:px-8 lg:py-14">
      <button type="button" data-back class="focus-ring mb-8 inline-flex items-center gap-2 rounded-lg text-sm font-bold text-teal-300 hover:text-teal-200"><i data-lucide="arrow-left" class="h-4 w-4" aria-hidden="true"></i><span>Voltar ao Menu Principal</span></button>
+<div class="dh-cta" aria-label="Demonstração de relatório">
+<button type="button" data-demo="diretoria" class="dh-btn dh-primary"><span aria-hidden="true">◉</span> Navegar pelo BI</button>
+<a class="dh-btn dh-secondary" download href="datahouse_diretoria_base_ficticia.csv"><span aria-hidden="true">↓</span> Baixar base fictícia (CSV)</a>
+<span class="dh-disclaimer">Demonstração com dados fictícios. Nenhum arquivo Power BI original é distribuído.</span>
+</div>
      <p class="canva-text text-xs font-bold uppercase tracking-[.22em] text-teal-400">Modelo 03 — Estratégico</p>
      <h1 class="canva-text display-font mt-3 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl">BI Corporativo para Diretoria</h1>
      <p class="canva-text mt-5 max-w-3xl text-lg leading-relaxed text-slate-300">Painel executivo sintetizado com foco em grandes números, evolução histórica, alcance de metas gerais da empresa e tendências de longo prazo.</p>
@@ -1535,6 +1574,15 @@
     <!-- DETALHE EXCEL -->
     <section id="detail-excel" class="portal-view detail-view mx-auto max-w-7xl px-5 py-10 lg:px-8 lg:py-14">
      <button type="button" data-back class="focus-ring mb-8 inline-flex items-center gap-2 rounded-lg text-sm font-bold text-rose-300 hover:text-rose-200"><i data-lucide="arrow-left" class="h-4 w-4" aria-hidden="true"></i><span>Voltar ao Menu Principal</span></button>
+<div class="dh-cta" aria-label="Demonstração de relatório">
+<button type="button" data-demo="excel" class="dh-btn dh-primary"><span aria-hidden="true">◉</span> Navegar pelo BI</button>
+<span class="dh-disclaimer">Escolha abaixo o modelo Excel que deseja baixar.</span>
+</div>
+<div class="dh-excel-downloads" aria-label="Downloads dos modelos Excel">
+  <a class="dh-excel-download" href="modelos/Modelo_Excel_MIS_DBM_Cobranca.xlsx" download><span class="dh-excel-symbol" aria-hidden="true">▦</span><span><strong>Cobrança</strong><small>Baixar modelo Excel (.xlsx)</small></span><span aria-hidden="true">↓</span></a>
+  <a class="dh-excel-download" href="modelos/Modelo_Excel_MIS_DBM_Vendas.xlsx" download><span class="dh-excel-symbol" aria-hidden="true">▦</span><span><strong>Vendas</strong><small>Baixar modelo Excel (.xlsx)</small></span><span aria-hidden="true">↓</span></a>
+  <a class="dh-excel-download" href="modelos/Modelo_Excel_MIS_DBM_SAC_Receptivo.xlsx" download><span class="dh-excel-symbol" aria-hidden="true">▦</span><span><strong>SAC / Receptivo</strong><small>Baixar modelo Excel (.xlsx)</small></span><span aria-hidden="true">↓</span></a>
+</div>
      <p class="canva-text text-xs font-bold uppercase tracking-[.22em] text-rose-400">Modelo 04 — Visão Analítica</p>
      <h1 class="canva-text display-font mt-3 max-w-4xl text-4xl font-semibold leading-tight sm:text-5xl">Relatórios Padronizados em Excel</h1>
      <p class="canva-text mt-5 max-w-3xl text-lg leading-relaxed text-slate-300">Estrutura oficial para envios em arquivos `.xlsx`. Garante que todas as planilhas da empresa mantenham o mesmo cabeçalho, tipografia, cores de tabela e validação de dados.</p>
@@ -2520,5 +2568,19 @@
   });
 </script>
   
- </body>
+ <div id="dh-demo-overlay" role="dialog" aria-modal="true" aria-label="Navegação pelo relatório">
+<div class="dh-demo-bar"><span class="dh-demo-label">✦ THE DATA HOUSE / <span id="dh-demo-title">MODELO</span></span><button type="button" id="dh-demo-close">← Voltar ao modelo</button></div>
+<iframe id="dh-demo-frame" title="Demonstração do BI" loading="lazy"></iframe></div>
+<script id="dh-demo-controller">
+(function(){
+ const files={cliente:'datahouse_bi_personalizado_stellantis_demo.html',interno:'datahouse_bi_operacional_demo.html',diretoria:'datahouse_bi_diretoria_demo.html',excel:'datahouse_modelo_excel_mis_demo.html'};
+ const names={cliente:'BI PERSONALIZADO',interno:'BI OPERACIONAL',diretoria:'BI DIRETORIA',excel:'RELATÓRIO EXCEL'};
+ const overlay=document.getElementById('dh-demo-overlay'),frame=document.getElementById('dh-demo-frame'),title=document.getElementById('dh-demo-title');
+ let previousFocus=null;
+ function close(){overlay.classList.remove('is-open');document.body.classList.remove('dh-demo-active');frame.removeAttribute('src');if(previousFocus)previousFocus.focus();}
+ document.querySelectorAll('[data-demo]').forEach(btn=>btn.addEventListener('click',()=>{let k=btn.dataset.demo;previousFocus=btn;title.textContent=names[k];frame.src=files[k];overlay.classList.add('is-open');document.body.classList.add('dh-demo-active');document.getElementById('dh-demo-close').focus();}));
+ document.getElementById('dh-demo-close').addEventListener('click',close);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('is-open'))close();});
+})();
+</script></body>
 </html>
